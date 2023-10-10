@@ -1,0 +1,83 @@
+/* Import font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+/* Custom properties */
+:root {
+	--background-color: #fff;
+	--light-color-alt: #afb6cd;
+	--text-color: #000;
+	--transparent-light-color: rgba(255, 255, 255, 0.05);
+	--font-family: "Poppins", sans-serif;
+	--font-size-xsm: 1.2rem;
+	--font-size-sm: 1.6rem;
+	--font-size-md: 2.4rem;
+	--font-size-lg: 3rem;
+	--font-size-xl: 4rem;
+	--gap: 2rem;
+	--margin-sm: 2rem;
+	--margin-md: 3rem;
+	--item-min-height-sm: 20rem;
+	--item-min-height-md: 30rem;
+}
+/* Base styles */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	height: 100%;
+	font-size: 10px;
+	/* font-size: 62.5%; Kan användas istället för mer responsiv?*/
+}
+
+body {
+	font-family: var(--font-family);
+	font-size: var(--font-size-sm);
+	color: var(--text-color);
+	background-color: var(--primary-background-color);
+	letter-spacing: 1px;
+	min-height: 100vh;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	min-width: 32rem;
+	max-width: 128rem;
+	margin: 0 auto;
+	padding: 0 1.5rem;
+	flex: 1;
+}
+
+header {
+	display: inline-flex;
+	height: 15rem;
+}
+
+main {
+	flex: 1;
+	min-height: calc(100vh - 25rem);
+}
+
+footer {
+	height: 10rem;
+}
+
+.header-logo {
+	height: 100%;
+}
+
+#h1-title {
+	font-size: 6rem;
+	align-self: flex-end;
+	margin-bottom: var(--margin-sm);
+	margin-left: var(--margin-md);
+}
+
+.dropdown {
+	text-align: right;
+	margin-left: auto;
+	margin-top: var(--margin-sm);
+	margin-right: var(--margin-sm);
+}
