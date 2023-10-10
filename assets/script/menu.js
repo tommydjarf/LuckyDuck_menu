@@ -1,4 +1,4 @@
-const filePathFood = 'menu.json';
+const filePathFood = 'test.txt';
 let i = 0;
 fetch(filePathFood)
 .then((response) => {
