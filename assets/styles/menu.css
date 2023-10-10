@@ -81,3 +81,60 @@ footer {
 	margin-top: var(--margin-sm);
 	margin-right: var(--margin-sm);
 }
+
+
+/* Melkes css________*/
+body{
+    margin: 0;
+}
+
+#flexboxes{
+    width: 100%;
+    height: 700px;
+    display: flex;
+    flex-direction: row;
+}
+
+#filter{
+    flex-basis: 20%;
+    height: 100%;
+    border-right: solid grey 1px;
+}
+
+#textBox{
+    width: 100%;
+    height: 50px;
+    border-bottom: solid grey 1px;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+#textBox h3{
+    color: black;
+    font-size: 15px;
+    line-height: 50px;
+    margin: 0;
+}
+
+#clearFilter{
+    color: gray;
+    font-size: 12px;
+    line-height: 50px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.filterText{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+#filter input{
+    width: 12px;
+}
+
+#menuFlexBoxOne, #menuFlexBoxTwo{
+    flex-basis: 40%;
+    height: 100%;
+    background-color: rgb(245, 245, 245);
+}
