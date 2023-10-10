@@ -1,4 +1,4 @@
-const filePathFood = 'test.txt';
+const filePathFood = './assets/script/menu.json';
 let i = 0;
 fetch(filePathFood)
 .then((response) => {
@@ -17,19 +17,24 @@ const data = JSON.parse(fileContent); // Omvandla texten till ett JavaScript-obj
         newDiv.classList.add("list-item"); // Lägg till en klass för den nya div-boxen
 
         // Skapa h1 och p-element för varje div
-        var h1 = document.createElement("h1");
-        h1.classList.add("h1list");
-        h1.textContent = item.dish.sv;
+        let h3Name = document.createElement("h1");
+        h3Name.classList.add("h3list");
+        h3Name.textContent = item.dish.sv;
 
-        var p = document.createElement("p");
-        p.classList.add("plist");
-        p.textContent = item.price;
+        var pPrice = document.createElement("p");
+        pPrice.classList.add("plist");
+        pPrice.textContent = item.price;
+
+        var pDescription = document.createElement("p");
+        pDescription.classList.add("plist");
+        pDescription.textContent = item.description.sv;
         
 
 
         // Lägg till h1 och p i den nya div-boxen
-        newDiv.appendChild(h1);
-        newDiv.appendChild(p);
+        newDiv.appendChild(h3Name);
+        newDiv.appendChild(pPrice);
+        newDiv.appendChild(pDescription);
 
         i++;
         if (i % 2) {
