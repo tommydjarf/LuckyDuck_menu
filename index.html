@@ -13,56 +13,61 @@
 				<a href="index.html" class="link-home"><img src="./assets/images/lucky_duck.png" alt="Logo image" class="header-logo" /></a>
 				<h1 id="h1-title">Meny</h1>
 				<!-- Dropdown for language selection -->
-				<div class="dropdown">
-					<button onclick="langFunction()" class="dropbtn">Language</button>
-					<div class="lang-dropdown" id="langDropdown">
-						<a href="#" id="swe">Svenska</a>
-						<a href="#" id="eng">English</a>
-					</div>
+				<div class="language-selection">
+					<a href="#" id="swe" hidden>Svenska</a>
+					<a href="#" id="eng">English</a>
 				</div>
 			</header>
+
 			<main>
-				<div id="flexboxes">
-					<div id="filter">
-						<div id="textBox">
-							<h3>Filtrera</h3>
-							<p id="clearFilter">Återställ filter</p>
+				<div class="container-main">
+					<!-- Checkbox for chosing alternative -->
+					<div class="container-choice" id="container-choice">
+						<div class="checkbox-choice" id="filterTextBlockMeat">
+							<h2>Välj</h2>
+							<label>
+								<input type="checkbox" name="beef" id="vegetarian" />
+								Vegetariskt
+							</label>
+							<br />
+							<label>
+								<input type="checkbox" name="beef" id="beef" />
+								Nötkött
+							</label>
+							<br />
+							<label>
+								<input type="checkbox" name="beef" id="pork" />
+								Griskött
+							</label>
+							<br />
+							<label>
+								<input type="checkbox" name="beef" id="chicken" />
+								Kyckling
+							</label>
+							<br />
+							<label>
+								<input type="checkbox" name="beef" id="fish" />
+								Fisk
+							</label>
 						</div>
 
-						<div id="filterTextBlockMeat">
-							<h2>Kötträtter</h2>
-							<div class="filterText">
-								<input type="checkbox" id="vegetarisk" />
-								<p>Vegetarisk</p>
-							</div>
-							<div class="filterText">
-								<input type="checkbox" id="kyckling" />
-								<p>Kyckling</p>
-							</div>
-							<div class="filterText">
-								<input type="checkbox" id="flask" />
-								<p>Fläsk</p>
-							</div>
-							<div class="filterText">
-								<input type="checkbox" id="not" />
-								<p>Nöt</p>
-							</div>
-							<div class="filterText">
-								<input type="checkbox" id="fisk" />
-								<p>Fisk</p>
-							</div>
-						</div>
-
-						<div id="filterTextBlockAllergies">
+						<div class="checkbox-choice" id="filterTextBlockAllergies">
 							<h2>Allegier</h2>
-							<div class="filterText">
-								<input type="checkbox" id="gluten" />
-								<p>Gluten</p>
-							</div>
-							<div class="filterText">
-								<input type="checkbox" id="laktos" />
-								<p>Laktos</p>
-							</div>
+							<label>
+								<input type="checkbox" name="beef" id="gluten" />
+								Glutenfritt
+							</label>
+							<br />
+							<label>
+								<input type="checkbox" name="beef" id="lactose" />
+								Laktosfritt
+							</label>
+						</div>
+
+						<div class="clearFilter">
+							<label>
+								<button type="reset" id="clearFilter">Återställ filter</button>
+							</label>
 						</div>
 
 						<div id="sort">
@@ -74,16 +79,15 @@
 							</select>
 						</div>
 					</div>
+					<div class="menu-display" id="menuDisplay"></div>
 
-					<div id="menuFlexBoxOne"></div>
-
-					<div id="menuFlexBoxTwo"></div>
+					<div class="food-pictures" id="menuFlexBoxTwo"></div>
 				</div>
 			</main>
 			<footer>
 				<p class="copyright">&copy; Grupp 9</p>
 			</footer>
 		</div>
-		<script src="./assets/script/menu.js"></script>
+		<script src="./assets/script/menu.js" type="module"></script>
 	</body>
 </html>

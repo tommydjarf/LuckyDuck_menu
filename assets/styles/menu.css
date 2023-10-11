@@ -56,11 +56,27 @@ header {
 }
 
 main {
-	flex: 1;
-	min-height: calc(100vh - 25rem);
+	max-height: calc(100vh - 25rem);
 }
 
-footer {
+.container-main {
+	display: flex;
+}
+
+.checkbox-choice {
+	width: 20rem;
+}
+
+.menu-display {
+	max-width: calc(128rem - 50rem);
+	overflow: 1;
+}
+
+.food-pictures {
+	width: 30rem;
+}
+
+. footer {
 	height: 10rem;
 }
 
@@ -75,7 +91,7 @@ footer {
 	margin-left: var(--margin-md);
 }
 
-.dropdown {
+.language-selection {
 	text-align: right;
 	margin-left: auto;
 	margin-top: var(--margin-sm);
