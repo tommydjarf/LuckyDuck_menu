@@ -35,6 +35,7 @@ function updateInterfaceLanguage() {
 	}
 }
 // Borde gå ganska smidigt att lägga till språkbytet här istället.....
+let menuItems; //skapa dessa som en global variabel så att vi kan använda den i varukorsfunktionen
 async function displayMenu(language) {
 	const menuDisplay = document.getElementById("menuDisplay");
 	menuDisplay.innerHTML = "";
@@ -47,6 +48,7 @@ async function displayMenu(language) {
 		} else {
 			items = menuItems.sv;
 		}
+    let buttonValueCounter = 0;
 		items.forEach((item) => {
 			const menuItemDiv = document.createElement("div");
 			menuItemDiv.classList.add("menu-item");
@@ -68,9 +70,17 @@ async function displayMenu(language) {
 			descriptionParagraph.classList.add("description");
 			descriptionParagraph.textContent = item.description;
 
+            const addProductButton = document.createElement("button");
+			addProductButton.classList.add("addProductButtonClass");
+			addProductButton.innerHTML = "Lägg i varukorg";
+            addProductButton.value = buttonValueCounter;
+            buttonValueCounter++;
+            
+
 			menuItemDiv.appendChild(dishHeader);
 			menuItemDiv.appendChild(priceParagraph);
 			menuItemDiv.appendChild(descriptionParagraph);
+            menuItemDiv.appendChild(addProductButton);
 
 			menuDisplay.appendChild(menuItemDiv);
 		});
@@ -79,15 +89,119 @@ async function displayMenu(language) {
 	}
 }
 
+let menuGlobalVariable; //skapa dessa som en global variabel så att vi kan använda den i varukorsfunktionen
 getMenu()
 	.then((menu) => {
 		console.log(menu);
+        menuGlobalVariable = menu;
 	})
 	.catch((error) => {
 		console.error("Något vart tok: ", error);
 	});
 
-displayMenu("sv");
+displayMenu("en");
+
+//_________under denna är funktionen för kanpp och varukorg
+
+let basketItem = [];
+let basketPrice = [];
+
+
+document.getElementById("menuDisplay").addEventListener("click", function(event) {
+    if (event.target.classList.contains("addProductButtonClass")) {
+        // Bara om det klickade elementet har klassen "addProductButtonClass"
+        buttonClickHandler(event);
+    }
+});
+
+
+function buttonClickHandler(event) {
+    const buttonValue = event.target.value;
+
+    const pricesForItems = menuGlobalVariable[currentLanguage].map((item) => {
+        if (typeof item.price === "number") {
+            return item.price;
+        } else if (typeof item.price === "object" && currentLanguage == "en") {
+            return item.price.half;
+        } else if (typeof item.price === "object" && currentLanguage == "sv") {
+            return item.price.half;
+        }
+        return 0; // Returnera 0 om prisformatet inte matchar något av de ovanstående
+    });
+
+    const nameForItems = menuGlobalVariable[currentLanguage].map((item) => {
+        if (currentLanguage == "en") {
+            return item.en.dish;
+        } else if (currentLanguage == "sv") {
+            return item.dish;// detta funkar inte________________________________________________________
+        }
+        return 0; 
+    });
+    addToBasketArray(buttonValue, pricesForItems, nameForItems); //kalla på funktionen och skicka med värdena
+} 
+
+  
+function addToBasketArray(buttonValue, pricesForItems, nameForItems) {
+
+    basketPrice.push(pricesForItems[buttonValue]);
+    console.log(basketPrice);
+
+    let addNew;
+
+    if (basketItem.includes(nameForItems[buttonValue]) == true){
+        addNew = false;
+        basketItem.push(nameForItems[buttonValue]);
+        console.log(basketItem);
+    } else{
+        addNew = true;
+        basketItem.push(nameForItems[buttonValue]);
+        console.log(basketItem);
+    }
+
+    let basketSum = totalPrice(basketPrice); //kalla på funktionerna
+    basketDiv(basketSum, addNew);
+    
+}
+
+function totalPrice(price) {
+    const sum = price.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, 0);
+      return sum;
+      
+}
+
+function basketDiv(total, addNew) {
+    const basketItemDiv = document.createElement("div");
+    basketItemDiv.classList.add("basketItemDivClass");
+
+    if (addNew == true){ //skriver bara ut om det kommit en ny produkt i arrayen
+        const dishBasketHeader = document.createElement("h4");
+        basketItemDiv.classList.add("basketItemNameClass");
+        dishBasketHeader.textContent = basketItem[(basketItem.length - 1)]; //skriver ut den senaste
+        basketItemDiv.appendChild(dishBasketHeader);
+    } else{ //lägg till antalet framför
+            let number = 0;
+            for (let i = 0; i < basketItem.length; i++) {
+
+                const dishName = basketItem[(basketItem.length - 1)]
+            
+                if (basketItem[i].includes(dishName)) {
+                    number++;
+                    const h4Element = document.querySelector(".basketItemNameClass");
+                    console.log(h4Element);
+                    h4Element.textContent = number + "st " + dishName;
+                 }
+            }
+      }
+    
+    basket.appendChild(basketItemDiv);
+    document.getElementById("totalAmount").textContent = "Att betala " + total;
+    document.getElementById("totalProducts").textContent = "produktantal " + basketItem.length;
+    
+}
+
+
 
 // Från Melker!
 
