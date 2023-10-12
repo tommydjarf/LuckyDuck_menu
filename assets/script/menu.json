@@ -94,7 +94,10 @@
 				"en": "Caesar Salad",
 				"sv": "Caesar Salad"
 			},
-			"price": { "half": 85, "full": 139 },
+			"price": { 
+				"half": 85,
+				"full": 139 
+			},
 			"description": {
 				"en": "Grilled chicken, bacon, croutons, parmesan and caesardressing",
 				"sv": "Varm kyckling, bacon, krutonger, parmesan samt caesardressing"

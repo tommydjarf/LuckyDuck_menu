@@ -134,7 +134,8 @@ body{
 }
 
 #menuFlexBoxOne, #menuFlexBoxTwo{
-    flex-basis: 40%;
+    overflow: scroll;
+	flex-basis: 40%;
     height: 100%;
     background-color: rgb(245, 245, 245);
 }
