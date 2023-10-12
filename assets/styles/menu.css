@@ -91,6 +91,13 @@ main {
 	margin-left: var(--margin-md);
 }
 
+.basket {
+	text-align: right;
+	margin-left: auto;
+	margin-right: 5rem;
+	margin-top: 2rem;
+}
+
 .language-selection {
 	text-align: right;
 	margin-left: auto;
