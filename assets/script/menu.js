@@ -1,3 +1,4 @@
+// Function to read menu data from JSON
 async function getMenu() {
 	return fetch("./assets/script/menu.json").then((response) => {
 		if (!response.ok) {
@@ -6,7 +7,7 @@ async function getMenu() {
 		return response.json().then((data) => data.menu);
 	});
 }
-
+// Function to read language data from JSON
 async function getLanguages() {
 	return fetch("./assets/script/menu.json").then((response) => {
 		if (!response.ok) {
@@ -15,11 +16,8 @@ async function getLanguages() {
 		return response.json().then((data) => data.language);
 	});
 }
-
+// Function to change language on
 async function displayLanguage(language) {
-	// const languageDisplay = document.getElementsByClassName("language");
-	// language.innerHTML = "";
-
 	try {
 		const languageItems = await getLanguages();
 
@@ -29,10 +27,50 @@ async function displayLanguage(language) {
 		} else {
 			items = languageItems.sv;
 		}
-		document.getElementById("h1-title").innerText = items.h1Title;
+		PopulateFilter(items);
 	} catch (error) {
 		console.error("Något vart tok: ", error);
 	}
+}
+
+function PopulateFilter(items) {
+	// Headlines
+	document.getElementById("h1-title").innerText = items.h1Title;
+	document.getElementById("choice").innerText = items.choice;
+	document.getElementById("allergies").innerText = items.allergies;
+	document.getElementById("sort").innerText = items.sort;
+	// Dish names.
+	const vegetarian = document.querySelector('label[for="vegetarian"]');
+	if (vegetarian) {
+		vegetarian.lastChild.nodeValue = items.vegetarian;
+	}
+	const beef = document.querySelector('label[for="beef"]');
+	if (beef) {
+		beef.lastChild.nodeValue = items.beef;
+	}
+	const pork = document.querySelector('label[for="pork"]');
+	if (pork) {
+		pork.lastChild.nodeValue = items.pork;
+	}
+	const chicken = document.querySelector('label[for="chicken"]');
+	if (chicken) {
+		chicken.lastChild.nodeValue = items.chicken;
+	}
+	const fish = document.querySelector('label[for="fish"]');
+	if (fish) {
+		fish.lastChild.nodeValue = items.fish;
+	}
+	// Allergies
+	const gluten = document.querySelector('label[for="gluten"]');
+	if (gluten) {
+		gluten.lastChild.nodeValue = items.gluten;
+	}
+	const lactose = document.querySelector('label[for="lactose"]');
+	if (lactose) {
+		lactose.lastChild.nodeValue = items.lactose;
+	}
+	// Filter reset
+	document.getElementById("clearFilter").innerText = items.clearFilter;
 }
 
 async function displayMenu(language) {
@@ -71,7 +109,6 @@ async function displayMenu(language) {
 			menuItemDiv.appendChild(dishHeader);
 			menuItemDiv.appendChild(priceParagraph);
 			menuItemDiv.appendChild(descriptionParagraph);
-
 			menuDisplay.appendChild(menuItemDiv);
 		});
 	} catch (error) {
@@ -79,93 +116,41 @@ async function displayMenu(language) {
 	}
 }
 
-// function changeLanguage(lang) {
-// 	currentLanguage = lang;
-// 	displayLanguage();
-// 	displayMenu();
-// }
 document.getElementById("eng").addEventListener("click", function () {
 	document.getElementById("swe").hidden = false;
 	document.getElementById("eng").hidden = true;
 	const engLangCode = "en";
+	localStorage.setItem("selectedLanguage", engLangCode);
+	localStorage.setItem("languageLinkState", "eng");
 	displayMenu(engLangCode);
 	displayLanguage(engLangCode);
 });
 document.getElementById("swe").addEventListener("click", function () {
 	document.getElementById("swe").hidden = true;
 	document.getElementById("eng").hidden = false;
+	localStorage.removeItem("selectedLanguage");
+	localStorage.setItem("languageLinkState", "swe");
 	const sweLangCode = "sv";
 	displayMenu(sweLangCode);
 	displayLanguage(sweLangCode);
 });
-// changeLanguage("se");
-// });
 
-// document.getElementById("eng").addEventListener("click", function () {
-// 	changeLanguage("en");
-// });
+const savedLanguage = localStorage.getItem("selectedLanguage");
+const savedLinkState = localStorage.getItem("languageLinkState");
 
-// getMenu()
-// 	.then((menu) => {
-// 		console.log(menu);
-// 	})
-// 	.catch((error) => {
-// 		console.error("Något vart tok: ", error);
-// 	});
+if (savedLanguage) {
+	displayMenu(savedLanguage);
+	displayLanguage(savedLanguage);
+}
 
-// getLanguages()
-// 	.then((language) => {
-// 		console.log(language);
-// 	})
-// 	.catch((error) => {
-// 		console.error("Något vart tok: ", error);
-// 	});
+if (savedLinkState === "eng") {
+	document.getElementById("swe").hidden = false;
+	document.getElementById("eng").hidden = true;
+} else {
+	document.getElementById("swe").hidden = true;
+	document.getElementById("eng").hidden = false;
+}
 
-const defaultLanguage = "sv";
+const defaultLanguage = localStorage.getItem("selectedLanguage") || "sv";
 displayMenu(defaultLanguage);
 displayLanguage(defaultLanguage);
-
-// Från Melker!
-
-// const filePathFood = "./assets/script/menu.json";
-// let i = 0;
-// fetch(filePathFood)
-// 	.then((response) => {
-// 		// Returnera texten som ett löfte (Promise)
-// 		return response.text();
-// 	})
-// 	.then((fileContent) => {
-// 		const data = JSON.parse(fileContent); // Omvandla texten till ett JavaScript-objekt
-
-// 		// Loopa igenom arrayen och skapa div-boxar för varje element
-// 		data.forEach(function (item) {
-// 			// Skapa en ny div för varje element
-// 			var newDiv = document.createElement("div");
-// 			newDiv.classList.add("list-item"); // Lägg till en klass för den nya div-boxen
-
-// 			// Skapa h1 och p-element för varje div
-// 			let h3Name = document.createElement("h1");
-// 			h3Name.classList.add("h3list");
-// 			h3Name.textContent = item.dish.sv;
-
-// 			var pPrice = document.createElement("p");
-// 			pPrice.classList.add("plist");
-// 			pPrice.textContent = item.price;
-
-// 			var pDescription = document.createElement("p");
-// 			pDescription.classList.add("plist");
-// 			pDescription.textContent = item.description.sv;
-
-// 			// Lägg till h1 och p i den nya div-boxen
-// 			newDiv.appendChild(h3Name);
-// 			newDiv.appendChild(pPrice);
-// 			newDiv.appendChild(pDescription);
-
-// 			i++;
-// 			if (i % 2) {
-// 				menuFlexBoxOne.appendChild(newDiv);
-// 			} else {
-// 				menuFlexBoxTwo.appendChild(newDiv);
-// 			}
-// 		});
-// 	});

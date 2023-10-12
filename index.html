@@ -21,57 +21,55 @@
 
 			<main>
 				<div class="container-main">
-					<!-- Checkbox for chosing alternative -->
+					<!-- Checkbox for chosing food alternative -->
 					<div class="container-choice" id="container-choice">
 						<div class="checkbox-choice" id="filterTextBlockMeat">
-							<h2>Välj</h2>
-							<label>
-								<input type="checkbox" name="beef" id="vegetarian" />
+							<h2 id="choice">Välj</h2>
+							<label for="vegetarian">
+								<input type="checkbox" id="vegetarian" name="vegetarian" value="vegetarian" />
 								Vegetariskt
 							</label>
 							<br />
-							<label>
-								<input type="checkbox" name="beef" id="beef" />
+							<label for="beef">
+								<input type="checkbox" id="beef" name="beef" value="beef" />
 								Nötkött
 							</label>
 							<br />
-							<label>
-								<input type="checkbox" name="beef" id="pork" />
+							<label for="pork">
+								<input type="checkbox" id="pork" name="pork" value="pork" />
 								Griskött
 							</label>
 							<br />
-							<label>
-								<input type="checkbox" name="beef" id="chicken" />
+							<label for="chicken">
+								<input type="checkbox" id="chicken" name="chicken" value="chicken" />
 								Kyckling
 							</label>
 							<br />
-							<label>
-								<input type="checkbox" name="beef" id="fish" />
+							<label for="fish">
+								<input type="checkbox" id="fish" name="fish" value="fish" />
 								Fisk
 							</label>
 						</div>
-
+						<!-- Checkbox for chosing allergies -->
 						<div class="checkbox-choice" id="filterTextBlockAllergies">
-							<h2>Allegier</h2>
-							<label>
-								<input type="checkbox" name="beef" id="gluten" />
+							<h2 id="allergies">Allegier</h2>
+							<label for="gluten">
+								<input type="checkbox" name="gluten" id="gluten" />
 								Glutenfritt
 							</label>
 							<br />
-							<label>
-								<input type="checkbox" name="beef" id="lactose" />
+							<label for="lactose">
+								<input type="checkbox" name="lactose" id="lactose" />
 								Laktosfritt
 							</label>
 						</div>
-
+						<!-- Button to clear filter -->
 						<div class="clearFilter">
-							<label>
-								<button type="reset" id="clearFilter">Återställ filter</button>
-							</label>
+							<button type="reset" id="clearFilter">Återställ filter</button>
 						</div>
 
-						<div id="sort">
-							<p>Sortera</p>
+						<div>
+							<p id="sort">Sortera</p>
 							<select id="">
 								<option value="standard">Standard</option>
 								<option value="priceHighToLow">Pris högt till lågt</option>
@@ -80,7 +78,7 @@
 						</div>
 					</div>
 					<div class="menu-display" id="menuDisplay"></div>
-
+					<!-- div for future pictures and design in desktop mode -->
 					<div class="food-pictures" id="menuFlexBoxTwo"></div>
 				</div>
 			</main>
