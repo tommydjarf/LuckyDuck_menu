@@ -7,34 +7,34 @@ async function getMenu() {
 	});
 }
 
-let currentLanguage = "sv";
-
-async function getLanguage() {
+async function getLanguages() {
 	return fetch("./assets/script/menu.json").then((response) => {
 		if (!response.ok) {
 			throw new Error("Error loading menu.json");
 		}
-		return response.json().then((data) => data.language)[currentLanguage];
+		return response.json().then((data) => data.language);
 	});
 }
 
-function toggleLanguage() {
-	if (currentLanguage == "sv") {
-		currentLanguage = "en";
-	} else {
-		currentLanguage = "sv";
+async function displayLanguage(language) {
+	// const languageDisplay = document.getElementsByClassName("language");
+	// language.innerHTML = "";
+
+	try {
+		const languageItems = await getLanguages();
+
+		let items = [];
+		if (language === "en") {
+			items = languageItems.en;
+		} else {
+			items = languageItems.sv;
+		}
+		document.getElementById("h1-title").innerText = items.h1Title;
+	} catch (error) {
+		console.error("Något vart tok: ", error);
 	}
-	updateInterfaceLanguage();
 }
 
-function updateInterfaceLanguage() {
-	//lägg till grejer
-	const languageText = getLanguage(currentLanguage);
-	if (currentLanguage == "sv") {
-		// Ska klura på om man ska göra det här i en annan funktion tills imorgon!
-	}
-}
-// Borde gå ganska smidigt att lägga till språkbytet här istället.....
 async function displayMenu(language) {
 	const menuDisplay = document.getElementById("menuDisplay");
 	menuDisplay.innerHTML = "";
@@ -42,7 +42,7 @@ async function displayMenu(language) {
 		const menuItems = await getMenu();
 
 		let items = [];
-		if (language == "en") {
+		if (language === "en") {
 			items = menuItems.en;
 		} else {
 			items = menuItems.sv;
@@ -58,9 +58,9 @@ async function displayMenu(language) {
 			priceParagraph.classList.add("price");
 			if (typeof item.price === "number") {
 				priceParagraph.textContent = `${item.price}:-`;
-			} else if (typeof item.price === "object" && language == "en") {
+			} else if (typeof item.price === "object" && language === "en") {
 				priceParagraph.textContent = `Small: ${item.price.half}:- / Large: ${item.price.full}:-`;
-			} else if (typeof item.price === "object" && language == "sv") {
+			} else if (typeof item.price === "object" && language === "sv") {
 				priceParagraph.textContent = `Liten: ${item.price.half}:- / Stor: ${item.price.full}:-`;
 			}
 
@@ -79,15 +79,51 @@ async function displayMenu(language) {
 	}
 }
 
-getMenu()
-	.then((menu) => {
-		console.log(menu);
-	})
-	.catch((error) => {
-		console.error("Något vart tok: ", error);
-	});
+// function changeLanguage(lang) {
+// 	currentLanguage = lang;
+// 	displayLanguage();
+// 	displayMenu();
+// }
+document.getElementById("eng").addEventListener("click", function () {
+	document.getElementById("swe").hidden = false;
+	document.getElementById("eng").hidden = true;
+	const engLangCode = "en";
+	displayMenu(engLangCode);
+	displayLanguage(engLangCode);
+});
+document.getElementById("swe").addEventListener("click", function () {
+	document.getElementById("swe").hidden = true;
+	document.getElementById("eng").hidden = false;
+	const sweLangCode = "sv";
+	displayMenu(sweLangCode);
+	displayLanguage(sweLangCode);
+});
+// changeLanguage("se");
+// });
 
-displayMenu("sv");
+// document.getElementById("eng").addEventListener("click", function () {
+// 	changeLanguage("en");
+// });
+
+// getMenu()
+// 	.then((menu) => {
+// 		console.log(menu);
+// 	})
+// 	.catch((error) => {
+// 		console.error("Något vart tok: ", error);
+// 	});
+
+// getLanguages()
+// 	.then((language) => {
+// 		console.log(language);
+// 	})
+// 	.catch((error) => {
+// 		console.error("Något vart tok: ", error);
+// 	});
+
+const defaultLanguage = "sv";
+displayMenu(defaultLanguage);
+displayLanguage(defaultLanguage);
 
 // Från Melker!
 

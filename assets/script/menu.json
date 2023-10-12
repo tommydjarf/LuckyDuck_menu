@@ -139,7 +139,7 @@
 	},
 	"language": {
 		"en": {
-			"h1-title": "Menu",
+			"h1Title": "Menu",
 			"clearFilter": "Clear filter",
 			"h2MainCourse": "Main course",
 			"vegetarian": "Vegetarian",
@@ -151,7 +151,7 @@
 			"lactose": "Free from Lactose"
 		},
 		"sv": {
-			"h1-title": "Meny",
+			"h1Title": "Meny",
 			"clearFilter": "Återställ filter",
 			"h2MainCourse": "Varmrätter",
 			"vegetarian": "Vegetariskt",
