@@ -76,7 +76,7 @@ main {
 	width: 30rem;
 }
 
-. footer {
+.footer {
 	height: 10rem;
 }
 
@@ -91,7 +91,7 @@ main {
 	margin-left: var(--margin-md);
 }
 
-.basket {
+.cart {
 	text-align: right;
 	margin-left: auto;
 	margin-right: 5rem;
