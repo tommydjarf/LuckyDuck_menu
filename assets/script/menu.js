@@ -125,6 +125,7 @@ async function displayMenu(language) {
 		console.error("Något vart tok: ", error);
 	}
 }
+
 // Event listner for language switch, swe to eng
 document.getElementById("eng").addEventListener("click", function () {
 	document.getElementById("swe").hidden = false;
@@ -274,65 +275,77 @@ function basketDiv(total, addNew) {
 
 // Sort from Martin
 
+let data = []; // Definiera data som en tom array
+
+async function loadData() {
+	try {
+		const menuItems = await getMenu();
+		data = menuItems[currentLanguage]; // Fyll data med menyobjekten för det aktuella språket
+	} catch (error) {
+		console.error("Något gick fel: ", error);
+	}
+}
+
+// Anropa loadData när sidan laddas
+loadData();
+
 const sortera = document.getElementById("sortera");
 // add händelselyssnare för "change" på droppdown-menyn
 sortera.addEventListener("change", () => {
 	// Hämta värdet av det valda alternativet i dropdown-menyn
 	const selectedOption = sortera.value;
+	console.log("Valt alternativ:", selectedOption); 
 	// Anropa funktionen "sortMenuItems" med det valda alternativet som argument
 	sortMenuItems(selectedOption);
 });
 
 // Funktion för att sortera menyobjekten baserat på det valda alternativet (pris lågt till högt eller högt till lågt)
 const sortMenuItems = (selectedOption) => {
-	if (selectedOption === "priceLowToHigh") {
-		// Sortera "data"-listan i stigande ordning baserat på priset (lägre pris först)
-		data.sort((a, b) => {
-			// Avgör priset för rätt "a" och "b". Om priset är ett objekt, använd "full" priset, annars använd priset självt.
-			const aPrice = typeof a.price === "object" ? a.price.full : a.price;
-			const bPrice = typeof b.price === "object" ? b.price.full : b.price;
-			// Jämför priset för rätt "a" och "b" och returnera ett värde för sorteringsordningen
-			return aPrice - bPrice;
-		});
-	} else if (selectedOption === "priceHighToLow") {
-		// Sortera "data"-listan i fallande ordning baserat på priset (högre pris först)
-		data.sort((a, b) => {
-			// Avgör priset för rätt "a" och "b". Om priset är ett objekt, använd "full" priset, annars använd priset självt.
-			const aPrice = typeof a.price === "object" ? a.price.full : a.price;
-			const bPrice = typeof b.price === "object" ? b.price.full : b.price;
-			// Jämför priset för rätt "a" och "b" och returnera ett värde för sorteringsordningen
-			return bPrice - aPrice;
-		});
-	}
-	// Rensa befintliga div-box
-	menuFlexBoxOne.innerHTML = "";
+    console.log("Sorteringsalternativ:", selectedOption);
+    if (selectedOption === "priceLowToHigh") {
+        // Sortera "data"-listan i stigande ordning baserat på priset (lägre pris först)
+        data.sort((a, b) => {
+            const aPrice = typeof a.price === "object" ? a.price.full : a.price;
+            const bPrice = typeof b.price === "object" ? b.price.full : b.price;
+            return aPrice - bPrice;
+        });
+    } else if (selectedOption === "priceHighToLow") {
+        // Sortera "data"-listan i fallande ordning baserat på priset (högre pris först)
+        data.sort((a, b) => {
+            const aPrice = typeof a.price === "object" ? a.price.full : a.price;
+            const bPrice = typeof b.price === "object" ? b.price.full : b.price;
+            return bPrice - aPrice;
+        });
+    }
+    // Rensa befintliga div-box
+    const menuDisplay = document.getElementById("menuDisplay");
+    menuDisplay.innerHTML = "";
 
-	// Loopa igenom den sorterade listan och skapa div-boxar som tidigare
-	data.forEach(function (item) {
-		var newDiv = document.createElement("div");
-		newDiv.classList.add("list-item");
+    // Loopa igenom den sorterade listan och skapa div-boxar som tidigare
+    data.forEach(function (item) {
+        const newDiv = document.createElement("div");
+        newDiv.classList.add("menu-item");
 
-		// Skapa h1 och p-element för varje div
-		let h3Name = document.createElement("h1");
-		h3Name.classList.add("h3list");
-		h3Name.textContent = item.dish.sv;
+        const dishHeader = document.createElement("h3");
+        dishHeader.textContent = item.dish;
+        
+        const priceParagraph = document.createElement("p");
+        priceParagraph.classList.add("price");
+        
+        // Om priset är ett objekt, använd både halva och hela priser i pristexten
+        if (typeof item.price === "object") {
+            priceParagraph.textContent = `Small: ${item.price.half}:- / Large: ${item.price.full}:-`;
+        } else {
+            priceParagraph.textContent = `${item.price}:-`;
+        }
+        
+        const descriptionParagraph = document.createElement("p");
+        descriptionParagraph.classList.add("description");
+        descriptionParagraph.textContent = item.description;
 
-		var pPrice = document.createElement("p");
-		pPrice.classList.add("plist");
-		const price = typeof item.price === "object" ? `Hel: ${item.price.full}, Halv: ${item.price.half}` : item.price; //om det är falskt utförs denna del
-		pPrice.textContent = price; //sätter priset i html elementet pPrice
-
-		var pDescription = document.createElement("p");
-		pDescription.classList.add("plist");
-		pDescription.textContent = item.description.sv;
-
-		// Lägg till h1 och p i den nya div-boxen
-		newDiv.appendChild(h3Name);
-		newDiv.appendChild(pPrice);
-		newDiv.appendChild(pDescription);
-
-		i++;
-
-		menuFlexBoxOne.appendChild(newDiv);
-	});
+        newDiv.appendChild(dishHeader);
+        newDiv.appendChild(priceParagraph);
+        newDiv.appendChild(descriptionParagraph);
+        menuDisplay.appendChild(newDiv);
+    });
 };
