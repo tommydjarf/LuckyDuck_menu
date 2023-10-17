@@ -4,24 +4,37 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="./assets/styles/menu.css" />
+		<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
 		<title>Lucky Duck - Meny</title>
 	</head>
 	<body>
+		<div id="topHeader">
+			<p>Öppet alla dagar 10:00-20:00</p>
+			<div class="language-selection">
+				<a href="#" id="swe" hidden>Svenska</a>
+				<a href="#" id="eng">English</a>
+			</div>
+		</div>
+
 		<div class="container">
 			<header>
 				<!-- Logo and title -->
-				<img src="./assets/images/lucky_duck.png" alt="Logo image" class="header-logo" />
-				<h1 class="h1-title" id="h1Title">Meny</h1>
-				<!-- Basket -->
-				<div id="basket" class="basket">
-					<p id="totalAmount"></p>
-					<p id="totalProducts"></p>
-				</div>
+				<a href="index.html" class="link-home"><img src="./assets/images/lucky_duck.png" alt="Logo image" class="header-logo" /></a>
+				<h1 id="h1-title">Meny</h1>
 
 				<!-- Language selection -->
-				<div class="language-selection">
-					<a href="#" id="swe" hidden>Svenska</a>
-					<a href="#" id="eng">English</a>
+				<div id="header-basket">
+					<!-- Basket section -->
+					<div id="basketSymbol">
+						<i class="fa-solid fa-basket-shopping"></i>
+						<p id="totalProducts"></p>
+					</div>
+
+					<!-- Basket -->
+					<div id="basket">
+						<p id="totalAmount"></p>
+						<button>Beställ</button>
+					</div>
 				</div>
 			</header>
 
@@ -31,28 +44,28 @@
 					<div class="container-choice" id="container-choice">
 						<div class="checkbox-choice" id="filterTextBlockMeat">
 							<h2 id="choice">Välj</h2>
-							<input type="checkbox" class="category-checkbox" id="vegetarian-input" name="vegetarian" value="vegetarian" />
+							<input type="checkbox" class="category-checkbox" id="vegetarian-input" data-filter="vegetarian" />
 							<label id="vegetarian" for="vegetarian-input"> Vegetariskt </label>
 							<br />
-							<input type="checkbox" class="category-checkbox" id="beef-input" name="beef" value="beef" />
+							<input type="checkbox" class="category-checkbox" id="beef-input" data-filter="beef" />
 							<label id="beef" for="beef-input"> Nötkött </label>
 							<br />
-							<input type="checkbox" class="category-checkbox" id="pork-input" name="pork" value="pork" />
+							<input type="checkbox" class="category-checkbox" id="pork-input" data-filter="pork" />
 							<label id="pork" for="pork-input"> Griskött </label>
 							<br />
-							<input type="checkbox" class="category-checkbox" id="chicken-input" name="chicken" value="chicken" />
+							<input type="checkbox" class="category-checkbox" id="chicken-input" data-filter="chicken" />
 							<label id="chicken" for="chicken-input"> Kyckling </label>
 							<br />
-							<input type="checkbox" class="category-checkbox" id="fish-input" name="fish" value="fish" />
+							<input type="checkbox" class="category-checkbox" id="fish-input" data-filter="fish" />
 							<label id="fish" for="fish-input"> Fisk </label>
 						</div>
 						<!-- Checkbox for chosing allergies -->
 						<div class="checkbox-choice" id="filterTextBlockAllergies">
 							<h2 id="allergies">Allegier</h2>
-							<input type="checkbox" class="category-checkbox" name="gluten" id="gluten-input" />
+							<input type="checkbox" class="category-checkbox" id="gluten-input" data-filter="gluten" />
 							<label id="gluten" for="gluten"> Glutenfritt </label>
 							<br />
-							<input type="checkbox" class="category-checkbox" name="lactose" id="lactose-input" />
+							<input type="checkbox" class="category-checkbox" id="lactose-input" data-filter="lactose" />
 							<label id="lactose" for="lactose"> Laktosfritt </label>
 						</div>
 						<!-- Button to clear filter -->
@@ -79,5 +92,6 @@
 			</footer>
 		</div>
 		<script src="./assets/script/menu.js" type="module"></script>
+		<script src="https://kit.fontawesome.com/308f39431b.js" crossorigin="anonymous"></script>
 	</body>
 </html>
