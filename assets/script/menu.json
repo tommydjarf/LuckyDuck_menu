@@ -158,35 +158,5 @@
 				"categories": ["Kött"]
 			}
 		]
-	},
-	"language": {
-		"en": {
-			"h1Title": "Menu",
-			"choice": "Choice",
-			"allergies": "Allergies",
-			"sort": "Sort",
-			"vegetarian": " Vegetarian",
-			"beef": " Beef",
-			"pork": " Pork",
-			"chicken": " Chicken",
-			"fish": " Fish",
-			"gluten": " Gluten free",
-			"lactose": " Lactose free",
-			"clearFilter": "Clear filter"
-		},
-		"sv": {
-			"h1Title": "Meny",
-			"choice": "Välj",
-			"allergies": "Allergier",
-			"sort": "Sortera",
-			"vegetarian": " Vegetariskt",
-			"beef": " Nötkött",
-			"pork": " Griskött",
-			"chicken": " Kyckling",
-			"fish": " Fisk",
-			"gluten": " Glutenfritt",
-			"lactose": " Laktosfritt",
-			"clearFilter": "Återställ filter"
-		}
 	}
 }

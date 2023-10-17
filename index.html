@@ -10,8 +10,8 @@
 		<div class="container">
 			<header>
 				<!-- Logo and title -->
-				<a href="index.html" class="link-home"><img src="./assets/images/lucky_duck.png" alt="Logo image" class="header-logo" /></a>
-				<h1 id="h1-title">Meny</h1>
+				<img src="./assets/images/lucky_duck.png" alt="Logo image" class="header-logo" />
+				<h1 class="h1-title" id="h1Title">Meny</h1>
 				<!-- Basket -->
 				<div id="basket" class="basket">
 					<p id="totalAmount"></p>
@@ -31,43 +31,29 @@
 					<div class="container-choice" id="container-choice">
 						<div class="checkbox-choice" id="filterTextBlockMeat">
 							<h2 id="choice">Välj</h2>
-							<label for="vegetarian">
-								<input type="checkbox" id="vegetarian" name="vegetarian" value="vegetarian" />
-								Vegetariskt
-							</label>
+							<input type="checkbox" class="category-checkbox" id="vegetarian-input" name="vegetarian" value="vegetarian" />
+							<label id="vegetarian" for="vegetarian-input"> Vegetariskt </label>
 							<br />
-							<label for="beef">
-								<input type="checkbox" id="beef" name="beef" value="beef" />
-								Nötkött
-							</label>
+							<input type="checkbox" class="category-checkbox" id="beef-input" name="beef" value="beef" />
+							<label id="beef" for="beef-input"> Nötkött </label>
 							<br />
-							<label for="pork">
-								<input type="checkbox" id="pork" name="pork" value="pork" />
-								Griskött
-							</label>
+							<input type="checkbox" class="category-checkbox" id="pork-input" name="pork" value="pork" />
+							<label id="pork" for="pork-input"> Griskött </label>
 							<br />
-							<label for="chicken">
-								<input type="checkbox" id="chicken" name="chicken" value="chicken" />
-								Kyckling
-							</label>
+							<input type="checkbox" class="category-checkbox" id="chicken-input" name="chicken" value="chicken" />
+							<label id="chicken" for="chicken-input"> Kyckling </label>
 							<br />
-							<label for="fish">
-								<input type="checkbox" id="fish" name="fish" value="fish" />
-								Fisk
-							</label>
+							<input type="checkbox" class="category-checkbox" id="fish-input" name="fish" value="fish" />
+							<label id="fish" for="fish-input"> Fisk </label>
 						</div>
 						<!-- Checkbox for chosing allergies -->
 						<div class="checkbox-choice" id="filterTextBlockAllergies">
 							<h2 id="allergies">Allegier</h2>
-							<label for="gluten">
-								<input type="checkbox" name="gluten" id="gluten" />
-								Glutenfritt
-							</label>
+							<input type="checkbox" class="category-checkbox" name="gluten" id="gluten-input" />
+							<label id="gluten" for="gluten"> Glutenfritt </label>
 							<br />
-							<label for="lactose">
-								<input type="checkbox" name="lactose" id="lactose" />
-								Laktosfritt
-							</label>
+							<input type="checkbox" class="category-checkbox" name="lactose" id="lactose-input" />
+							<label id="lactose" for="lactose"> Laktosfritt </label>
 						</div>
 						<!-- Button to clear filter -->
 						<div class="clearFilter">

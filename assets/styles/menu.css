@@ -84,7 +84,7 @@ main {
 	height: 100%;
 }
 
-#h1-title {
+.h1-title {
 	font-size: 6rem;
 	align-self: flex-end;
 	margin-bottom: var(--margin-sm);

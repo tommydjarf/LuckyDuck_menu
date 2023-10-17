@@ -1,338 +1,232 @@
-// Function to read menu data from JSON
-async function getMenu() {
-	return fetch("./assets/script/menu.json").then((response) => {
-		if (!response.ok) {
-			throw new Error("Error loading menu.json");
-		}
-		return response.json().then((data) => data.menu);
-	});
+// Function to get data from JSON
+async function fetchData(url) {
+	const response = await fetch(url);
+	if (!response.ok) {
+		throw new Error(`Tok att ladda ${url}`);
+	}
+	return response.json();
 }
-// Function to read language data from JSON
-async function getLanguages() {
-	return fetch("./assets/script/menu.json").then((response) => {
-		if (!response.ok) {
-			throw new Error("Error loading menu.json");
-		}
-		return response.json().then((data) => data.language);
-	});
+
+//Function to be able to read menu and language data from JSON
+async function getMenuAndLanguages() {
+	try {
+		const [menu, languages] = await Promise.all([fetchData("./assets/script/menu.json"), fetchData("./assets/script/languages.json")]);
+		return { menu, languages };
+	} catch (error) {
+		console.error("Tok me getMenuAndLanguages ", error);
+	}
 }
-// Function to change language on
+
+//Function to switch between swe and eng
 async function displayLanguage(language) {
 	try {
-		const languageItems = await getLanguages();
-
-		let items = [];
-		if (language === "en") {
-			items = languageItems.en;
-		} else {
-			items = languageItems.sv;
-		}
-		PopulateFilter(items);
+		const { languages } = await getMenuAndLanguages();
+		const items = languages.language[language];
+		console.log(items);
+		populateFilter(items);
 	} catch (error) {
-		console.error("Något vart tok: ", error);
+		console.error("Nu vart de tok igen ", error);
 	}
 }
-// Function to populate IDs in HTML @ language switch
-function PopulateFilter(items) {
-	// Headlines
-	document.getElementById("h1-title").innerText = items.h1Title;
-	document.getElementById("choice").innerText = items.choice;
-	document.getElementById("allergies").innerText = items.allergies;
-	document.getElementById("sort").innerText = items.sort;
-	// Dish names
-	const vegetarian = document.querySelector('label[for="vegetarian"]');
-	if (vegetarian) {
-		vegetarian.lastChild.nodeValue = items.vegetarian;
-	}
-	const beef = document.querySelector('label[for="beef"]');
-	if (beef) {
-		beef.lastChild.nodeValue = items.beef;
-	}
-	const pork = document.querySelector('label[for="pork"]');
-	if (pork) {
-		pork.lastChild.nodeValue = items.pork;
-	}
-	const chicken = document.querySelector('label[for="chicken"]');
-	if (chicken) {
-		chicken.lastChild.nodeValue = items.chicken;
-	}
-	const fish = document.querySelector('label[for="fish"]');
-	if (fish) {
-		fish.lastChild.nodeValue = items.fish;
-	}
-	// Allergies
-	const gluten = document.querySelector('label[for="gluten"]');
-	if (gluten) {
-		gluten.lastChild.nodeValue = items.gluten;
-	}
-	const lactose = document.querySelector('label[for="lactose"]');
-	if (lactose) {
-		lactose.lastChild.nodeValue = items.lactose;
-	}
-	// Filter reset
-	document.getElementById("clearFilter").innerText = items.clearFilter;
-}
-// Function to display menu in choosen language
-async function displayMenu(language) {
-	const menuDisplay = document.getElementById("menuDisplay");
-	menuDisplay.innerHTML = "";
-	try {
-		const menuItems = await getMenu();
-		// Chooses what language to get from JSON and saves to items
-		let items = [];
-		if (language === "en") {
-			items = menuItems.en;
-		} else {
-			items = menuItems.sv;
-		}
-		let buttonValueCounter = 0; //Varukorg från melker
-		// Prints every dish in JSON a div in main
-		items.forEach((item) => {
-			// Adds a div for each dish
-			const menuItemDiv = document.createElement("div");
-			menuItemDiv.classList.add("menu-item");
-			// Adds a h3 headline for each dish
-			const dishHeader = document.createElement("h3");
-			dishHeader.textContent = item.dish;
-			// Adds price to each dish, tests if the dish has only one number or object
-			const priceParagraph = document.createElement("p");
-			priceParagraph.classList.add("price");
-			if (typeof item.price === "number") {
-				priceParagraph.textContent = `${item.price}:-`;
-			} else if (typeof item.price === "object" && language === "en") {
-				priceParagraph.textContent = `Small: ${item.price.half}:- / Large: ${item.price.full}:-`;
-			} else if (typeof item.price === "object" && language === "sv") {
-				priceParagraph.textContent = `Liten: ${item.price.half}:- / Stor: ${item.price.full}:-`;
-			}
-			// Adds a discription for each dish
-			const descriptionParagraph = document.createElement("p");
-			descriptionParagraph.classList.add("description");
-			descriptionParagraph.textContent = item.description;
-			// Basket (kan den här flyttas?)
-			const addProductButton = document.createElement("button");
-			addProductButton.classList.add("addProductButtonClass");
-			addProductButton.innerHTML = language === "en" ? "Add to cart" : "Lägg i varukorg";
-			addProductButton.value = buttonValueCounter;
-			buttonValueCounter++;
-			// Puts everyting in the HTML
-			menuItemDiv.appendChild(dishHeader);
-			menuItemDiv.appendChild(priceParagraph);
-			menuItemDiv.appendChild(descriptionParagraph);
-			menuItemDiv.appendChild(addProductButton); // varukorg från melker
-			menuDisplay.appendChild(menuItemDiv);
-		});
-	} catch (error) {
-		console.error("Något vart tok: ", error);
-	}
-}
-// Event listner for language switch, swe to eng
-document.getElementById("eng").addEventListener("click", function () {
-	document.getElementById("swe").hidden = false;
-	document.getElementById("eng").hidden = true;
-	const engLangCode = "en";
-	localStorage.setItem("selectedLanguage", engLangCode);
-	localStorage.setItem("languageLinkState", "eng");
-	displayMenu(engLangCode);
-	displayLanguage(engLangCode);
-});
-// Event listner for language switch, en to swe
-document.getElementById("swe").addEventListener("click", function () {
-	document.getElementById("swe").hidden = true;
-	document.getElementById("eng").hidden = false;
-	localStorage.removeItem("selectedLanguage");
-	localStorage.setItem("languageLinkState", "swe");
-	const sweLangCode = "sv";
-	displayMenu(sweLangCode);
-	displayLanguage(sweLangCode);
-});
-// Saves language and link state to localstorage
-const savedLanguage = localStorage.getItem("selectedLanguage");
-const savedLinkState = localStorage.getItem("languageLinkState");
-// Checks values in local storage to display correct language
-if (savedLanguage) {
-	displayMenu(savedLanguage);
-	displayLanguage(savedLanguage);
-}
-// Checks and sets correct linkstate
-if (savedLinkState === "eng") {
-	document.getElementById("swe").hidden = false;
-	document.getElementById("eng").hidden = true;
-} else {
-	document.getElementById("swe").hidden = true;
-	document.getElementById("eng").hidden = false;
-}
-// Default language swe
-const currentLanguage = localStorage.getItem("selectedLanguage") || "sv";
-displayMenu(currentLanguage);
-displayLanguage(currentLanguage);
 
-// Basket (from Melker)
-
-let menuGlobalVariable; //skapa dessa som en global variabel så att vi kan använda den i varukorsfunktionen
-getMenu()
-	.then((menu) => {
-		console.log(menu);
-		menuGlobalVariable = menu;
-	})
-	.catch((error) => {
-		console.error("Något vart tok: ", error);
-	});
-
-//_________under denna är funktionen för kanpp och varukorg
-
-let basketItem = [];
-let basketPrice = [];
-
-document.getElementById("menuDisplay").addEventListener("click", function (event) {
-	if (event.target.classList.contains("addProductButtonClass")) {
-		// Bara om det klickade elementet har klassen "addProductButtonClass"
-		buttonClickHandler(event);
-	}
-});
-
-function buttonClickHandler(event) {
-	const buttonValue = event.target.value;
-
-	const pricesForItems = menuGlobalVariable[currentLanguage].map((item) => {
-		if (typeof item.price === "number") {
-			return item.price;
-		} else if (typeof item.price === "object" && currentLanguage == "en") {
-			return item.price.half;
-		} else if (typeof item.price === "object" && currentLanguage == "sv") {
-			return item.price.half;
-		}
-		return 0; // Returnera 0 om prisformatet inte matchar något av de ovanstående
-	});
-
-	const nameForItems = menuGlobalVariable[currentLanguage].map((item) => {
-		if (currentLanguage == "en") {
-			return item.dish;
-		} else if (currentLanguage == "sv") {
-			return item.dish;
-		}
-		return 0;
-	});
-	addToBasketArray(buttonValue, pricesForItems, nameForItems); //kalla på funktionen och skicka med värdena
-}
-
-function addToBasketArray(buttonValue, pricesForItems, nameForItems) {
-	basketPrice.push(pricesForItems[buttonValue]);
-	console.log(basketPrice);
-
-	let addNew;
-
-	if (basketItem.includes(nameForItems[buttonValue]) == true) {
-		addNew = false;
-		basketItem.push(nameForItems[buttonValue]);
-		console.log(basketItem);
-	} else {
-		addNew = true;
-		basketItem.push(nameForItems[buttonValue]);
-		console.log(basketItem);
-	}
-
-	let basketSum = totalPrice(basketPrice); //kalla på funktionerna
-	basketDiv(basketSum, addNew);
-}
-
-function totalPrice(priceBasket) {
-	const sum = priceBasket.reduce((accumulator, currentValue) => {
-		return accumulator + currentValue;
-	}, 0);
-	return sum;
-}
-
-function basketDiv(total, addNew) {
-	const basketItemDiv = document.createElement("div");
-	basketItemDiv.classList.add("basketItemDivClass");
-
-	if (addNew == true) {
-		//skriver bara ut om det kommit en ny produkt i arrayen
-		const dishBasketHeader = document.createElement("h4");
-		basketItemDiv.classList.add("basketItemNameClass");
-		dishBasketHeader.textContent = basketItem[basketItem.length - 1]; //skriver ut den senaste
-		basketItemDiv.appendChild(dishBasketHeader);
-	} else {
-		//lägg till antalet framför
-		let number = 0;
-		for (let i = 0; i < basketItem.length; i++) {
-			const dishName = basketItem[basketItem.length - 1];
-
-			if (basketItem[i].includes(dishName)) {
-				number++;
-				const h4Element = document.querySelector(".basketItemNameClass");
-				console.log(h4Element);
-				h4Element.textContent = number + "st " + dishName;
-			}
+//Function to populate when switching language, everyting but the menu
+function populateFilter(items) {
+	for (const key in items) {
+		const element = document.getElementById(key);
+		if (element) {
+			element.innerText = items[key];
 		}
 	}
-
-	basket.appendChild(basketItemDiv);
-	document.getElementById("totalAmount").textContent = "Att betala " + total;
-	document.getElementById("totalProducts").textContent = "produktantal " + basketItem.length;
 }
 
-// Sort from Martin
-
-const sortera = document.getElementById("sortera");
-// add händelselyssnare för "change" på droppdown-menyn
-sortera.addEventListener("change", () => {
-	// Hämta värdet av det valda alternativet i dropdown-menyn
+// Funktion för att hantera både filtrering och sortering
+async function handleSortAndFilter(event) {
 	const selectedOption = sortera.value;
-	// Anropa funktionen "sortMenuItems" med det valda alternativet som argument
-	sortMenuItems(selectedOption);
-});
+	const checkboxId = event.target.value;
+	if (event.target.type === "checkbox") {
+		const isChecked = event.target.checked;
+		if (isChecked) {
+			// Checkboxen är markerad
+			addFilter(checkboxId);
+		} else {
+			// Checkboxen är inte markerad
+			removeFilter(checkboxId);
+		}
+	}
 
-// Funktion för att sortera menyobjekten baserat på det valda alternativet (pris lågt till högt eller högt till lågt)
-const sortMenuItems = (selectedOption) => {
+	// Använd appliedFilters för filtrering
+	const filteredAndSortedData = await filterAndSortMenu(selectedOption, appliedFilters);
+	// Visa de filtrerade och sorterade rätterna
+	displayMenu(filteredAndSortedData);
+}
+
+let appliedFilters = [];
+
+function addFilter(filter) {
+	if (!appliedFilters.includes(filter)) {
+		appliedFilters.push(filter);
+	}
+}
+
+function removeFilter(filter) {
+	const index = appliedFilters.indexOf(filter);
+	if (index !== -1) {
+		appliedFilters.splice(index, 1);
+	}
+}
+
+async function filterAndSortMenu(language, selectedOption, filters) {
+	const { menu } = await getMenuAndLanguages();
+	const data = menu.menu[language];
+	// Utför filtrering baserat på aktiva filter
+	const filteredData = data.filter((item) => {
+		// Om inga filter är aktiva, visa alla rätter
+		if (filters.length === 0) {
+			return true;
+		}
+		// Annars, kontrollera om rätten innehåller minst ett av de aktiva filtren
+		return filters.some((filter) => item.categories.includes(filter));
+	});
+
+	// Utför sortering baserat på det valda alternativet
 	if (selectedOption === "priceLowToHigh") {
-		// Sortera "data"-listan i stigande ordning baserat på priset (lägre pris först)
-		data.sort((a, b) => {
-			// Avgör priset för rätt "a" och "b". Om priset är ett objekt, använd "full" priset, annars använd priset självt.
+		// Sortera "filteredData" i stigande ordning baserat på priset (lägre pris först)
+		filteredData.sort((a, b) => {
 			const aPrice = typeof a.price === "object" ? a.price.full : a.price;
 			const bPrice = typeof b.price === "object" ? b.price.full : b.price;
-			// Jämför priset för rätt "a" och "b" och returnera ett värde för sorteringsordningen
 			return aPrice - bPrice;
 		});
 	} else if (selectedOption === "priceHighToLow") {
-		// Sortera "data"-listan i fallande ordning baserat på priset (högre pris först)
-		data.sort((a, b) => {
-			// Avgör priset för rätt "a" och "b". Om priset är ett objekt, använd "full" priset, annars använd priset självt.
+		// Sortera "filteredData" i fallande ordning baserat på priset (högre pris först)
+		filteredData.sort((a, b) => {
 			const aPrice = typeof a.price === "object" ? a.price.full : a.price;
 			const bPrice = typeof b.price === "object" ? b.price.full : b.price;
-			// Jämför priset för rätt "a" och "b" och returnera ett värde för sorteringsordningen
 			return bPrice - aPrice;
 		});
 	}
-	// Rensa befintliga div-box
-	menuFlexBoxOne.innerHTML = "";
 
-	// Loopa igenom den sorterade listan och skapa div-boxar som tidigare
-	data.forEach(function (item) {
-		var newDiv = document.createElement("div");
-		newDiv.classList.add("list-item");
+	return filteredData;
+}
 
-		// Skapa h1 och p-element för varje div
-		let h3Name = document.createElement("h1");
-		h3Name.classList.add("h3list");
-		h3Name.textContent = item.dish.sv;
+const sortera = document.getElementById("sortera");
+const meatFilterContainer = document.getElementById("filterTextBlockMeat");
 
-		var pPrice = document.createElement("p");
-		pPrice.classList.add("plist");
-		const price = typeof item.price === "object" ? `Hel: ${item.price.full}, Halv: ${item.price.half}` : item.price; //om det är falskt utförs denna del
-		pPrice.textContent = price; //sätter priset i html elementet pPrice
+// Händelselyssnare för ändringar i både filter och sorteringsval
+sortera.addEventListener("change", handleSortAndFilter);
+meatFilterContainer.addEventListener("change", handleSortAndFilter);
 
-		var pDescription = document.createElement("p");
-		pDescription.classList.add("plist");
-		pDescription.textContent = item.description.sv;
+//Function to display menu i swe or eng
+function displayMenu(filteredAndSortedData) {
+	const menuDisplay = document.getElementById("menuDisplay");
+	menuDisplay.innerHTML = "";
 
-		// Lägg till h1 och p i den nya div-boxen
-		newDiv.appendChild(h3Name);
-		newDiv.appendChild(pPrice);
-		newDiv.appendChild(pDescription);
+	try {
+		const items = filteredAndSortedData;
 
-		i++;
+		items.forEach((item) => {
+			const menuItemDiv = document.createElement("div");
+			menuItemDiv.classList.add("menu-item");
 
-		menuFlexBoxOne.appendChild(newDiv);
+			const dishHeader = document.createElement("h3");
+			dishHeader.textContent = item.dish;
+
+			const priceParagraph = document.createElement("p");
+			priceParagraph.classList.add("price");
+			priceParagraph.textContent = getPriceText(item.price, language);
+
+			const discriptionParagraph = document.createElement("p");
+			discriptionParagraph.classList.add("description");
+			discriptionParagraph.textContent = item.description;
+
+			const addProductButton = createAddToCartButton(language);
+			addProductButton.value = item.id;
+
+			menuItemDiv.appendChild(dishHeader);
+			menuItemDiv.appendChild(priceParagraph);
+			menuItemDiv.appendChild(discriptionParagraph);
+			menuItemDiv.appendChild(addProductButton);
+
+			menuDisplay.appendChild(menuItemDiv);
+		});
+	} catch (error) {
+		console.error("Tok med displayMenu ", error);
+	}
+}
+
+//Function add to cart button
+function createAddToCartButton(language) {
+	const addProductButton = document.createElement("button");
+	addProductButton.classList.add("addProductButtonClass");
+	addProductButton.innerHTML = language === "en" ? "Add to cart" : "Lägg i varukorg";
+	return addProductButton;
+}
+
+//Function to get price depending wich language is selected
+function getPriceText(price, language) {
+	if (typeof price === "number") {
+		return `${price}:-`;
+	} else if (typeof price === "object") {
+		return language === "en" ? `Small: ${price.half}:- / Large: ${price.full}:-` : `Liten: ${price.half}:- / Stor: ${price.full}:-`;
+	}
+	return "";
+}
+
+//Function with eventlistner for language switch
+function setLanguageEventListeners() {
+	const engButton = document.getElementById("eng");
+	const sweButton = document.getElementById("swe");
+
+	engButton.addEventListener("click", () => setLanguage("en"));
+	sweButton.addEventListener("click", () => setLanguage("sv"));
+}
+
+//Function to set language andu update text
+function setLanguage(language) {
+	document.getElementById("swe").hidden = language === "sv";
+	document.getElementById("eng").hidden = language === "en";
+	localStorage.setItem("selectedLanguage", language);
+
+	const languageLinkState = language === "en" ? "eng" : "swe";
+	localStorage.setItem("languageLinkState", languageLinkState);
+
+	filterAndSortMenu(language);
+	displayLanguage(language);
+}
+
+//Function start
+function start() {
+	const savedLanguage = localStorage.getItem("selectedLanguage") || "sv";
+	const savedLinkState = localStorage.getItem("languageLinkState");
+
+	setLanguage(savedLanguage);
+	setLanguageEventListeners();
+
+	if (savedLinkState === "eng") {
+		document.getElementById("swe").hidden = false;
+		document.getElementById("eng").hidden = true;
+	}
+}
+
+start();
+
+document.querySelectorAll(".category-checkbox, #sortera").forEach(function (element) {
+	element.addEventListener("change", function () {
+		sortMenu(document.getElementById("sortera").value);
 	});
-};
+});
+
+// async function sortMenu(language, filteredResault) {
+// 	var vegetarian = document.getElementById("vegetarian-input").checked;
+//     var beef = document.getElementById("beef-input").checked;
+//     var pork = document.getElementById("pork-input").checked;
+//     var chicken = document.getElementById("chicken-input").checked;
+//     var fish = document.getElementById("fish-input").checked;
+//     var gluten = document.getElementById("gluten-input").checked;
+//     var lactose = document.getElementById("lactose-input").checked;
+
+// 	try {
+// 		const { menu } = await getMenuAndLanguages();
+// 		const items = menu.menu[language];
+
+// }
+// }
