@@ -192,7 +192,7 @@ document.getElementById("menuDisplay").addEventListener("click", function (event
 });
 
 function buttonClickHandler(event) {
-	const buttonValue = event.target.value;
+	let buttonValue = event.target.value;
 
 	const pricesForItems = menuGlobalVariable[currentLanguage].map((item) => {
 		if (typeof item.price === "number") {
@@ -275,70 +275,142 @@ function basketDiv(total, addNew) {
 
 // Sort from Martin
 
-let data = []; // Definiera data som en tom array
 
+// Definiera en tom array som heter "data" för att lagra menyobjekten.
+let data = [];
+
+// En asynkron funktion som hämtar menyobjekten när sidan laddas.
 async function loadData() {
-	try {
-		const menuItems = await getMenu();
-		data = menuItems[currentLanguage]; // Fyll data med menyobjekten för det aktuella språket
-	} catch (error) {
-		console.error("Något gick fel: ", error);
-	}
+    try {
+        // Anropa "getMenu()" för att hämta menyn och sätta "data" till menyn för det aktuella språket (currentLanguage).
+        const menuItems = await getMenu();
+        data = menuItems[currentLanguage];
+    } catch (error) {
+        // Om det uppstår ett fel, logga det i konsolen.
+        console.error("Något gick fel: ", error);
+    }
 }
 
-// Anropa loadData när sidan laddas
+// Anropa "loadData()" när sidan laddas.
 loadData();
 
+// Hitta HTML-elementen för sortering och filtrering.
 const sortera = document.getElementById("sortera");
-// add händelselyssnare för "change" på droppdown-menyn
-sortera.addEventListener("change", () => {
-	// Hämta värdet av det valda alternativet i dropdown-menyn
-	const selectedOption = sortera.value;
-	console.log("Valt alternativ:", selectedOption); 
-	// Anropa funktionen "sortMenuItems" med det valda alternativet som argument
-	sortMenuItems(selectedOption);
-});
+const meatFilterContainer = document.getElementById("filterTextBlockMeat");
 
-// Funktion för att sortera menyobjekten baserat på det valda alternativet (pris lågt till högt eller högt till lågt)
-const sortMenuItems = (selectedOption) => {
-    console.log("Sorteringsalternativ:", selectedOption);
+// Lägg till händelselyssnare för ändringar i både sortering och filtrering.
+sortera.addEventListener("change", handleSortAndFilter);
+meatFilterContainer.addEventListener("change", handleSortAndFilter);
+
+// Funktion för att hantera både filtrering och sortering.
+async function handleSortAndFilter(event) {
+    // Hämta det valda sorteringsalternativet och id på klickad checkbox.
+    const selectedOption = sortera.value;
+    const checkboxId = event.target.value;
+    
+    if (event.target.type === "checkbox") {
+        const isChecked = event.target.checked;
+        
+        if (isChecked) {
+            // Om en checkbox är markerad, lägg till filtret och logga dess id i konsolen.
+            addFilter(checkboxId);
+            console.log(checkboxId);
+        } else {
+            // Om checkboxen inte är markerad, ta bort filtret.
+            removeFilter(checkboxId);
+        }
+    }
+
+    // Använd "appliedFilters" för filtrering och sortering.
+    const filteredAndSortedData = filterAndSortMenu(selectedOption, appliedFilters);
+
+    // Visa de filtrerade och sorterade rätterna och logga dem i konsolen.
+    displayMenuItems(filteredAndSortedData);
+    console.log(filteredAndSortedData);
+}
+
+// En array som lagrar aktiva filter.
+let appliedFilters = [];
+
+// Funktion för att lägga till ett filter i "appliedFilters".
+function addFilter(filter) {
+    if (!appliedFilters.includes(filter)) {
+        appliedFilters.push(filter);
+        console.log(filter);
+    }
+}
+
+// Funktion för att ta bort ett filter från "appliedFilters".
+function removeFilter(filter) {
+    const index = appliedFilters.indexOf(filter);
+    if (index !== -1) {
+        appliedFilters.splice(index, 1);
+    }
+}
+
+// Funktion för att filtrera och sortera menyobjekt.
+function filterAndSortMenu(selectedOption, filters) {
+    // Logga de aktiva filtren för felsökning.
+    console.log(filters);
+
+    // Utför filtrering baserat på aktiva filter.
+    // Använd Array.filter() för att skapa en ny lista (filteredData) som innehåller endast de objekt som passerar filtreringskriterierna.
+    const filteredData = data.filter((item) => {
+        // Om inga filter är aktiva, visa alla rätter.
+        if (filters.length === 0) {
+            return true; // Returnera true för att behålla rätten i filtreringsresultatet.
+        }
+        // Annars, kontrollera om rätten innehåller minst ett av de aktiva filtren.
+        // Använd Array.some() för att kontrollera om något av de aktiva filtren finns i rättens kategorier.
+        return filters.some((filter) => item.categories.includes(filter));
+    });
+
+    // Utför sortering baserat på det valda alternativet.
     if (selectedOption === "priceLowToHigh") {
-        // Sortera "data"-listan i stigande ordning baserat på priset (lägre pris först)
-        data.sort((a, b) => {
+        // Sortera "filteredData" i stigande ordning baserat på priset (lägre pris först).
+        filteredData.sort((a, b) => {
             const aPrice = typeof a.price === "object" ? a.price.full : a.price;
             const bPrice = typeof b.price === "object" ? b.price.full : b.price;
             return aPrice - bPrice;
         });
     } else if (selectedOption === "priceHighToLow") {
-        // Sortera "data"-listan i fallande ordning baserat på priset (högre pris först)
-        data.sort((a, b) => {
+        // Sortera "filteredData" i fallande ordning baserat på priset (högre pris först).
+        filteredData.sort((a, b) => {
             const aPrice = typeof a.price === "object" ? a.price.full : a.price;
             const bPrice = typeof b.price === "object" ? b.price.full : b.price;
             return bPrice - aPrice;
         });
     }
-    // Rensa befintliga div-box
-    const menuDisplay = document.getElementById("menuDisplay");
+
+    return filteredData; // Returnera den filtrerade och sorterade datan.
+}
+
+// Hitta HTML-elementet där menyobjekten ska visas.
+const menuDisplay = document.getElementById("menuDisplay");
+
+// Funktion för att visa menyobjekten.
+function displayMenuItems(items) {
+    // Rensa befintliga menyobjekt.
     menuDisplay.innerHTML = "";
 
-    // Loopa igenom den sorterade listan och skapa div-boxar som tidigare
-    data.forEach(function (item) {
+    // Loopa igenom menyobjekten och skapa div-element för varje objekt.
+    items.forEach(function (item) {
         const newDiv = document.createElement("div");
         newDiv.classList.add("menu-item");
 
         const dishHeader = document.createElement("h3");
         dishHeader.textContent = item.dish;
-        
+
         const priceParagraph = document.createElement("p");
         priceParagraph.classList.add("price");
-        
-        // Om priset är ett objekt, använd både halva och hela priser i pristexten
+
+        // Om priset är ett objekt, visa både halva och hela priserna.
         if (typeof item.price === "object") {
             priceParagraph.textContent = `Small: ${item.price.half}:- / Large: ${item.price.full}:-`;
         } else {
             priceParagraph.textContent = `${item.price}:-`;
         }
-        
+
         const descriptionParagraph = document.createElement("p");
         descriptionParagraph.classList.add("description");
         descriptionParagraph.textContent = item.description;
@@ -348,4 +420,4 @@ const sortMenuItems = (selectedOption) => {
         newDiv.appendChild(descriptionParagraph);
         menuDisplay.appendChild(newDiv);
     });
-};
+}

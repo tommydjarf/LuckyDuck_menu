@@ -62,7 +62,7 @@
 				"dish": "Creamy Chicken Pasta",
 				"price": 169,
 				"description": "Sundried tomatoes, basil, vegetables and parmesan",
-				"categories": ["Chicken", "Milk", "Gluten"]
+				"categories": ["chicken", "Milk", "Gluten"]
 			},
 			{
 				"id": 10,
