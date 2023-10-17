@@ -3,7 +3,95 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./assets/styles/menu.css" />
 		<title>Lucky Duck - Meny</title>
 	</head>
-	<body></body>
+	<body>
+		<div class="container">
+			<header>
+				<!-- Logo and title -->
+				<a href="index.html" class="link-home"><img src="./assets/images/lucky_duck.png" alt="Logo image" class="header-logo" /></a>
+				<h1 id="h1-title">Meny</h1>
+				<!-- Basket -->
+				<div id="basket" class="basket">
+					<p id="totalAmount"></p>
+					<p id="totalProducts"></p>
+				</div>
+
+				<!-- Language selection -->
+				<div class="language-selection">
+					<a href="#" id="swe" hidden>Svenska</a>
+					<a href="#" id="eng">English</a>
+				</div>
+			</header>
+
+			<main>
+				<div class="container-main">
+					<!-- Checkbox for chosing food alternative -->
+					<div class="container-choice" id="container-choice">
+						<div class="checkbox-choice" id="filterTextBlockMeat">
+							<h2 id="choice">Välj</h2>
+							<label for="vegetarian">
+								<input type="checkbox" id="vegetarian" name="Vegetarian" value="Vegetarisk" />
+								Vegetariskt
+							</label>
+							<br />
+							<label for="beef">
+								<input type="checkbox" id="beef" name="Beef" value="Kött" />
+								Nötkött
+							</label>
+							<br />
+							<label for="pork">
+								<input type="checkbox" id="pork" name="Pork" value="Kött" />
+								Griskött
+							</label>
+							<br />
+							<label for="chicken">
+								<input type="checkbox" id="chicken" name="Chicken" value="Kyckling" />
+								Kyckling
+							</label>
+							<br />
+							<label for="fish">
+								<input type="checkbox" id="fish" name="Fish" value="Fisk" />
+								Fisk
+							</label>
+						</div>
+						<!-- Checkbox for chosing allergies -->
+						<div class="checkbox-choice" id="filterTextBlockAllergies">
+							<h2 id="allergies">Allegier</h2>
+							<label for="gluten">
+								<input type="checkbox" name="gluten" id="gluten" />
+								Glutenfritt
+							</label>
+							<br />
+							<label for="lactose">
+								<input type="checkbox" name="lactose" id="lactose" />
+								Laktosfritt
+							</label>
+						</div>
+						<!-- Button to clear filter -->
+						<div class="clearFilter">
+							<button type="reset" id="clearFilter">Återställ filter</button>
+						</div>
+
+						<div>
+							<p id="sort">Sortera</p>
+							<select id="sortera">
+								<option value="standard">Standard</option>
+								<option value="priceHighToLow">Pris högt till lågt</option>
+								<option value="priceLowToHigh">Pris lögt till högt</option>
+							</select>
+						</div>
+					</div>
+					<div class="menu-display" id="menuDisplay"></div>
+					<!-- div for future pictures and design in desktop mode -->
+					<div class="food-pictures" id="menuFlexBoxTwo"></div>
+				</div>
+			</main>
+			<footer>
+				<p class="copyright">&copy; Grupp 9</p>
+			</footer>
+		</div>
+		<script src="./assets/script/menu.js" type="module"></script>
+	</body>
 </html>
