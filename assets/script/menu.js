@@ -145,31 +145,31 @@ var gluten = document.getElementById("gluten-input").checked;
 var lactose = document.getElementById("lactose-input").checked;
 var selectedCheckboxes = [];
 
-// async function getMenuItemsBasedOnSelection(language) {
-// 	try {
-// 		const { menu } = await getMenuAndLanguages();
-// 		const items = menu.menu[language];
-// 	} catch (error) {
-// 		console.error("Nu vart de tok med getMenuItems ", error);
-// 	}
-// }
-
-function setupCheckboxEventListener(checkboxId, variable) {
+function setupCheckboxEventListener(checkboxId) {
 	var checkbox = document.getElementById(checkboxId);
-	var idWithoutInput = checkboxId.replace("-input", "");
 	checkbox.addEventListener("change", function () {
-		variable = checkbox.checked;
-		if (checkbox.checked) {
-			selectedCheckboxes.push(idWithoutInput);
-		} else {
-			const index = selectedCheckboxes.indexOf(idWithoutInput);
-			if (index > -1) {
-				selectedCheckboxes.splice(index, 1);
-			}
-		}
-		console.log(checkboxId + ": " + variable);
-		console.log(selectedCheckboxes);
+		filterMenuItems();
 	});
+}
+
+async function filterMenuItems(filterdItems) {
+	try {
+		const { menu } = await getMenuAndLanguages();
+		const items = menu.menu[language];
+		const selectedCheckboxes = document.querySelectorAll(".category-checkbox:checked");
+
+		if (selectedCheckboxes.length === 0) {
+			return filterdItems;
+		}
+
+		const selectedCheckboxeIds = Array.from(selectedCheckboxes).map((checkbox) => checkbox.id.replace("-input", ""));
+
+		return filterdItems.filter((item) => {
+			return selectedCheckboxeIds.some((id) => item.tags.includes(id));
+		});
+	} catch (error) {
+		console.error("Tok med filterdMenuItems ", error);
+	}
 }
 
 setupCheckboxEventListener("vegetarian-input", vegetarian);
@@ -180,18 +180,28 @@ setupCheckboxEventListener("fish-input", fish);
 setupCheckboxEventListener("gluten-input", gluten);
 setupCheckboxEventListener("lactose-input", lactose);
 
+// function setupCheckboxEventListener(checkboxId, variable) {
+// 	var checkbox = document.getElementById(checkboxId);
+// 	var idWithoutInput = checkboxId.replace("-input", "");
+// 	checkbox.addEventListener("change", function () {
+// 		variable = checkbox.checked;
+// 		if (checkbox.checked) {
+// 			selectedCheckboxes.push(idWithoutInput);
+// 		} else {
+// 			const index = selectedCheckboxes.indexOf(idWithoutInput);
+// 			if (index > -1) {
+// 				selectedCheckboxes.splice(index, 1);
+// 			}
+// 		}
+// 		console.log(checkboxId + ": " + variable);
+// 		console.log(selectedCheckboxes);
+// 	});
+// }
+
 //-----------------------------------------Cart
 
 let basketItem = [];
 let basketPrice = [];
-// const { menuGlobalVariable } = await getMenuAndLanguages();
-// // let currentLanguage = localStorage.getItem("selectedLanguage", language);
-
-// console.log(menuGlobalVariable);
-
-// getMenuAndLanguages().then((menu) => {
-// 	menuGlobalVariable = menu;
-// });
 
 document.getElementById("menuDisplay").addEventListener("click", function (event) {
 	if (event.target.classList.contains("addProductButtonClass")) {
@@ -316,18 +326,3 @@ showBasket.addEventListener("click", () => {
 });
 
 start();
-
-// document.querySelectorAll(".category-checkbox, #sortera").forEach(function (element) {
-// 	element.addEventListener("change", function () {
-// 		sortMenu(document.getElementById("sortera").value);
-// 	});
-// });
-
-// async function sortMenu(language, filteredResault) {
-
-// 	try {
-// 		const { menu } = await getMenuAndLanguages();
-// 		const items = menu.menu[language];
-
-// }
-// }
