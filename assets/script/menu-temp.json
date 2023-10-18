@@ -1,0 +1,169 @@
+{
+	"menu": [
+		{
+			"dish": {
+				"en": "Pork Tenderloin Plank Steak",
+				"sv": "Fläskfiléplanka"
+			},
+			"price": 149,
+			"description": {
+				"en": "Duchesse potatoes, a redwine reduction, béarnaise and fried vegetables",
+				"sv": "Duchesse mos, rödvinssky, bearnaise och stekta grönsaker"
+			},
+			"categories": {
+				"en": ["Meat", "Milk"],
+				"sv": ["Kött", "Mjölk"]
+			}
+		},
+		{
+			"dish": {
+				"en": "Beef Rydberg",
+				"sv": "Biff Rydberg"
+			},
+			"price": 175,
+			"description": {
+				"en": "Diced beef tenderloin, potatoes and onion, served with dijonmustard and raw egg yolk",
+				"sv": "Tärnad oxfilé, potatis och gullök, serveras med dijonsenapskräm och rå äggula"
+			},
+			"categories": {
+				"en": ["Meat"],
+				"sv": ["Kött"]
+			}
+		},
+		{
+			"dish": {
+				"en": "Spicy Cheeseburger",
+				"sv": "Spicy Cheeseburger"
+			},
+			"price": 155,
+			"description": {
+				"en": "180gram prime rib burger with lettuce, tomato, pickled red onion, cheddar cheese with jalapeños and barbecue sauce in brioche bread with fries and smokey ranch-aioli",
+				"sv": "180gram högrevsburgare med sallad, tomat, picklade rödlök, cheddarost med jalapeños och barbecuesås i briochebröd med pommes och rökig ranch-aioli"
+			},
+			"categories": {
+				"en": ["Meat", "Gluten"],
+				"sv": ["Kött", "Gluten"]
+			}
+		},
+		{
+			"dish": {
+				"en": "Halloumi Burger",
+				"sv": "Halloumi Burgare"
+			},
+			"price": 155,
+			"description": {
+				"en": "Lettuce, tomato, red onion and guacamole in brioche bread with fries and aioli",
+				"sv": "Sallad, tomat, rödlök och guacamole i brioche bröd med pommes och aioli"
+			},
+			"categories": {
+				"en": ["Vegetarian", "Gluten"],
+				"sv": ["Vegetarisk", "Gluten"]
+			}
+		},
+		{
+			"dish": {
+				"en": "Fish'n Chips",
+				"sv": "Fish'n Chips"
+			},
+			"price": 149,
+			"description": {
+				"en": "Beer-batter breaded cod loins with dill-aioli, seared lemon and fries",
+				"sv": "\"Beer-batter\" panerad torskrygg med dill-aioli, halstrad citron och pommes"
+			},
+			"categories": {
+				"en": ["Fish", "Gluten"],
+				"sv": ["Fisk", "Gluten"]
+			}
+		},
+		{
+			"dish": {
+				"en": "Our own Schnitzel",
+				"sv": "Husets Schnitzel"
+			},
+			"price": 175,
+			"description": {
+				"en": "200 grams of meat \"Borás biggest\" served with lemon, capers, anchovy, herb butter and a redwine reduction with fried potatoes",
+				"sv": "200 gram välbankad schnitzel \"Boras största\" med citron, kapris, anjovis, kryddsmör och rödvinssky serveras med stekt potatis"
+			},
+			"categories": {
+				"en": ["Meat", "Gluten", "Milk"],
+				"sv": ["Kött", "Gluten", "Mjölk"]
+			}
+		},
+		{
+			"dish": {
+				"en": "Caesar Salad",
+				"sv": "Caesar Salad"
+			},
+			"price": { "half": 85, "full": 139 },
+			"description": {
+				"en": "Grilled chicken, bacon, croutons, parmesan and caesardressing",
+				"sv": "Varm kyckling, bacon, krutonger, parmesan samt caesardressing"
+			},
+			"categories": {
+				"en": ["Milk", "Gluten"],
+				"sv": ["Mjölk", "Gluten"]
+			}
+		},
+		{
+			"dish": {
+				"en": "Salmon Salad with Quinoa",
+				"sv": "Lax sallad med quinoa"
+			},
+			"price": 159,
+			"description": {
+				"en": "Grilled salmon with quinoa, cocktail tomatoes, julianne carrot, mixed salad, red onion with vinegrette",
+				"sv": "Grillad lax med quinoa, coctailtomater, blandsallad, morot julienne, rödlök med en vinägrett"
+			},
+			"categories": {
+				"en": ["Fish"],
+				"sv": ["Fisk"]
+			}
+		},
+		{
+			"dish": {
+				"en": "Creamy Chicken Pasta",
+				"sv": "Krämig kycklingpasta"
+			},
+			"price": 169,
+			"description": {
+				"en": "Sundried tomatoes, basil, vegetables and parmesan",
+				"sv": "Soltorkade tomater, basilika, grönsaker och parmesan"
+			},
+			"categories": {
+				"en": ["Chicken", "Milk", "Gluten"],
+				"sv": ["Kyckling", "Mjölk", "Gluten"]
+			}
+		},
+		{
+			"dish": {
+				"en": "Mussels Ál Cava",
+				"sv": "Mussels Ál Cava"
+			},
+			"price": { "half": 109, "full": 189 },
+			"description": {
+				"en": "Steamed mussels in a creamy cava sauce, topped with cream fraiche and jalapenos, served with fries and aioli",
+				"sv": "Ångkokta musslor i en krämig sås gjord på cava, toppas med cream fraiche och jalapenos, serveras med pommes och aioli"
+			},
+			"categories": {
+				"en": ["Fish", "Milk"],
+				"sv": ["Fisk", "Mjölk"]
+			}
+		},
+		{
+			"dish": {
+				"en": "Grilled Beef Tenderloin",
+				"sv": "Grilled Beef Tenderloin"
+			},
+			"price": 259,
+			"description": {
+				"en": "200 gram beef tenderloin, redwine reduction, fried vegetable and potato gratin (possible with fries and bearnaise)",
+				"sv": "200 gram oxfilé, rödvinssås, frästa ärtor med potatisgratäng (möjligt med pommes och bearnaise)"
+			},
+			"categories": {
+				"en": ["Meat"],
+				"sv": ["Kött"]
+			}
+		}
+	]
+}
