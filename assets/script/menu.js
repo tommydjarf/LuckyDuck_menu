@@ -1,3 +1,5 @@
+let language = localStorage.getItem("selectedLanguage") || "sv";
+
 // Function to get data from JSON
 async function fetchData(url) {
 	const response = await fetch(url);
@@ -182,46 +184,54 @@ setupCheckboxEventListener("lactose-input", lactose);
 
 let basketItem = [];
 let basketPrice = [];
-let menuGlobalVariable = [];
+// const { menuGlobalVariable } = await getMenuAndLanguages();
+// // let currentLanguage = localStorage.getItem("selectedLanguage", language);
 
-console.log(menuGlobalVariable);
+// console.log(menuGlobalVariable);
 
-getMenuAndLanguages().then((menu) => {
-	menuGlobalVariable = menu;
-});
+// getMenuAndLanguages().then((menu) => {
+// 	menuGlobalVariable = menu;
+// });
 
 document.getElementById("menuDisplay").addEventListener("click", function (event) {
 	if (event.target.classList.contains("addProductButtonClass")) {
 		// Bara om det klickade elementet har klassen "addProductButtonClass"
-		buttonClickHandler(event);
+		buttonClickHandler(language, event);
 	}
 });
 
-function buttonClickHandler(language, event) {
-	let buttonValue = event.target.value;
-	buttonValue--; //minus ett då id är ett men den första kolumnen i arryaen är noll
-	console.log(buttonValue);
+async function buttonClickHandler(language, event) {
+	try {
+		const { menu } = await getMenuAndLanguages();
+		const items = menu.menu[language];
 
-	const pricesForItems = menuGlobalVariable[language].map((item) => {
-		if (typeof item.id === "number") {
-			return item.price;
-		} else if (typeof item.price === "object" && language == "en") {
-			return item.price.half;
-		} else if (typeof item.price === "object" && language == "sv") {
-			return item.price.half;
-		}
-		return 0; // Returnera 0 om prisformatet inte matchar något av de ovanstående
-	});
+		let buttonValue = event.target.value;
+		buttonValue--; //minus ett då id är ett men den första kolumnen i arryaen är noll
+		console.log(buttonValue);
 
-	const nameForItems = menuGlobalVariable[language].map((item) => {
-		if (currentLanguage == "en") {
-			return item.dish;
-		} else if (currentLanguage == "sv") {
-			return item.dish;
-		}
-		return 0;
-	});
-	addToBasketArray(buttonValue, pricesForItems, nameForItems); //kalla på funktionen och skicka med värdena
+		const pricesForItems = items.map((item) => {
+			if (typeof item.id === "number") {
+				return item.price;
+			} else if (typeof item.price === "object" && language == "en") {
+				return item.price.half;
+			} else if (typeof item.price === "object" && language == "sv") {
+				return item.price.half;
+			}
+			return 0; // Returnera 0 om prisformatet inte matchar något av de ovanstående
+		});
+
+		const nameForItems = items.map((item) => {
+			if (language == "en") {
+				return item.dish;
+			} else if (language == "sv") {
+				return item.dish;
+			}
+			return 0;
+		});
+		addToBasketArray(buttonValue, pricesForItems, nameForItems); //kalla på funktionen och skicka med värdena
+	} catch (error) {
+		console.error("Tok med buttonclickhandler: ", error);
+	}
 }
 
 function addToBasketArray(buttonValue, pricesForItems, nameForItems) {
