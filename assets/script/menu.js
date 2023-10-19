@@ -60,7 +60,7 @@ async function displayMenu(language) {
 
 			const priceParagraph = document.createElement("p");
 			priceParagraph.classList.add("price");
-			priceParagraph.textContent = getPriceText(item.price, language);
+			priceParagraph.innerHTML = getPriceText(item.price, language);
 
 			const discriptionParagraph = document.createElement("p");
 			discriptionParagraph.classList.add("description");
@@ -94,7 +94,11 @@ function getPriceText(price, language) {
 	if (typeof price === "number") {
 		return `${price}:-`;
 	} else if (typeof price === "object") {
-		return language === "en" ? `Small: ${price.half}:- / Large: ${price.full}:-` : `Liten: ${price.half}:- / Stor: ${price.full}:-`;
+		if (language === "en") {
+			return `<span class="spanSmall">Small: ${price.half}:-</span> / <span class="spanFull">Large: ${price.full}:-</span>`;
+		} else {
+			return `Liten: ${price.half}:- / Stor: ${price.full}:-`;
+		}
 	}
 	return "";
 }
@@ -371,6 +375,7 @@ let basketPrice = [];
 document.getElementById("menuDisplay").addEventListener("click", function (event) {
 	if (event.target.classList.contains("addProductButtonClass")) {
 		// Bara om det klickade elementet har klassen "addProductButtonClass"
+
 		buttonClickHandler(language, event);
 	}
 });
@@ -381,16 +386,30 @@ async function buttonClickHandler(language, event) {
 		const items = menu.menu[language];
 
 		let buttonValue = event.target.value;
+		let smallOrFull = "small";
 		buttonValue--; //minus ett då id är ett men den första kolumnen i arryaen är noll
 		console.log(buttonValue);
 
 		const pricesForItems = items.map((item) => {
-			if (typeof item.id === "number") {
+			if (typeof item.id === "number" && typeof item.price === "number") {
 				return item.price;
 			} else if (typeof item.price === "object" && language == "en") {
-				return item.price.half;
+				
+				console.log(smallOrFull);
+					if (smallOrFull == "small") {
+						return item.price.half;
+					}else if (smallOrFull == "full") {
+						return item.price.full;
+					}
+				
 			} else if (typeof item.price === "object" && language == "sv") {
-				return item.price.half;
+					
+					console.log(smallOrFull);
+					if (smallOrFull == "small") {
+						return item.price.half;
+					}else if (smallOrFull == "full") {
+						return item.price.full;
+					}
 			}
 			return 0; // Returnera 0 om prisformatet inte matchar något av de ovanstående
 		});
@@ -408,6 +427,37 @@ async function buttonClickHandler(language, event) {
 		console.error("Tok med buttonclickhandler: ", error);
 	}
 }
+
+
+
+let smallOrFull = "small";
+// Hämta en Node-list av alla element med klassen "spanSmall" och "spanFull"
+const smallMenu = document.querySelectorAll(".spanSmall");
+const fullMenu = document.querySelectorAll(".spanFull");
+
+// Iterera igenom listan och lägg till eventlyssnare på varje element
+smallMenu.forEach((element) => {
+  element.addEventListener("click", () => {
+    // Klickhändelse för "spanSmall" element
+    document.querySelector(".spanSmall").style.textDecoration = "underline";
+    document.querySelector(".spanFull").style.textDecoration = "none";
+    smallOrFull = "small";
+    console.log("smallOrFull");
+  });
+});
+
+fullMenu.forEach((element) => {
+  element.addEventListener("click", () => {
+    // Klickhändelse för "spanFull" element
+    document.querySelector(".spanFull").style.textDecoration = "underline";
+    document.querySelector(".spanSmall").style.textDecoration = "none";
+    smallOrFull = "full";
+    console.log("smallOrFull");
+  });
+});
+
+
+
 
 function addToBasketArray(buttonValue, pricesForItems, nameForItems) {
 	basketPrice.push(pricesForItems[buttonValue]);
@@ -437,13 +487,12 @@ function totalPrice(priceBasket) {
 }
 
 function basketDiv(total, addNew) {
-	const basketItemDiv = document.createElement("div");
-	basketItemDiv.classList.add("basketItemDivClass");
+	const basketItemDiv = document.querySelector(".basketItemDivClass");
 
 	if (addNew == true) {
 		//skriver bara ut om det kommit en ny produkt i arrayen
 		const dishBasketHeader = document.createElement("h4");
-		basketItemDiv.classList.add("basketItemNameClass");
+		dishBasketHeader.classList.add("basketItemNameClass");
 		dishBasketHeader.textContent = "1 st " + basketItem[basketItem.length - 1]; //skriver ut den senaste
 		basketItemDiv.appendChild(dishBasketHeader);
 	} else {
@@ -470,10 +519,8 @@ function basketDiv(total, addNew) {
 		}
 	}
 
-	basket.appendChild(basketItemDiv);
-	document.getElementById("totalAmount").textContent = "Att betala " + total;
+	document.getElementById("totalAmount").textContent = "Att betala: " + total + ":-";
 	document.getElementById("totalProducts").textContent = "( " + basketItem.length + " )";
-	document.getElementById("clearBasket").style.display = "block";
 }
 
 const showBasket = document.querySelector(".fa-solid");

@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<div id="topHeader">
-			<p>Öppet alla dagar 10:00-20:00</p>
+			<p id="openingHours">Öppet alla dagar 10:00-20:00</p>
 			<div class="language-selection">
 				<a href="#" id="swe" hidden>Svenska</a>
 				<a href="#" id="eng">English</a>
@@ -32,8 +32,9 @@
 
 					<!-- Basket -->
 					<div id="basket">
+						<div class="basketItemDivClass"></div>
 						<p id="totalAmount"></p>
-						<button>Beställ</button>
+						<button id="shopNow">Beställ</button>
 					</div>
 				</div>
 			</header>
@@ -91,6 +92,7 @@
 				<p class="copyright">&copy; Grupp 9</p>
 			</footer>
 		</div>
+
 		<script src="./assets/script/menu.js" type="module"></script>
 		<script src="https://kit.fontawesome.com/308f39431b.js" crossorigin="anonymous"></script>
 	</body>

@@ -23,6 +23,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	color: #562931;
 }
 
 html {
@@ -50,37 +51,75 @@ body {
 	flex: 1;
 }
 
-#header-basket {
+#topHeader{
+	width: 100%;
+	height: 4rem;
+	background: #f7e7e4;
+}
+
+#openingHours{
+	text-align: center;
+	line-height: 4rem;
+}
+
+.language-selection{
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+	margin: 0;
+}
+
+.language-selection a{
 	text-align: right;
-	margin-left: auto;
-	width: 100%;
-	padding-right: 4rem;
-}
-
-#basketSymbol {
-	width: 100%;
-}
-
-#basketSymbol i {
-	font-size: 28px;
-	display: inline-block;
-	cursor: pointer;
-}
-
-#totalProducts {
-	display: inline-block;
-}
-
-#basket {
-	border: solid 1px black;
-	width: 30%;
-	margin-left: 70%;
-	display: none;
+	font-size: 15px;
+	text-decoration: none;
 }
 
 header {
 	display: inline-flex;
 	height: 15rem;
+	position: relative;
+}
+
+#header-basket {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	text-align: right;
+}
+
+
+#basketSymbol{
+	width: 100%;
+}
+
+#basketSymbol i{
+	font-size: 28px;
+	display: inline-block;
+	cursor: pointer;
+}
+
+#totalProducts{
+	display: inline-block;
+}
+
+#basket{
+	background: #f7e7e4;
+	width: 100%;
+	display: none;
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+	padding: 2.5rem;
+}
+
+#totalAmount{
+	text-align: center;
+	text-decoration: underline;
+	margin-top: 1.5rem;
+}
+
+#shopNow{
+	margin-top: 1rem;
+	width: 100%;
 }
 
 main {
@@ -98,6 +137,23 @@ main {
 .menu-display {
 	max-width: calc(128rem - 50rem);
 	overflow: 1;
+	background: #F9F9F9;
+	padding: 2rem;
+}
+
+.addProductButtonClass, #clearFilter, #shopNow{
+	border: none;
+	padding: 5px;
+	background: #562930;
+	color: white;
+	font-size: 12px;
+	border-radius: 2px;
+
+}
+
+.addProductButtonClass:hover, #clearFilter:hover{
+	background: #F4C7BE;
+
 }
 
 .food-pictures {
@@ -112,7 +168,7 @@ main {
 	height: 100%;
 }
 
-.h1-title {
+#h1-title {
 	font-size: 6rem;
 	align-self: flex-end;
 	margin-bottom: var(--margin-sm);
@@ -126,21 +182,15 @@ main {
 	margin-top: 2rem;
 }
 
-#topHeader {
-	width: 100%;
-	height: 4rem;
-	background: #f7e7e4;
+
+
+.spanSmall {
+    cursor: pointer;
+	text-decoration: underline;
 }
 
-.language-selection {
-	margin-left: 85%;
-	width: 15%;
-	margin-bottom: 2rem;
+.spanFull {
+    cursor: pointer;
+
 }
 
-.language-selection a {
-	text-align: right;
-	font-size: 15px;
-	color: black;
-	text-decoration: none;
-}
