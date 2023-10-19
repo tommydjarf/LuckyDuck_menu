@@ -111,10 +111,12 @@ function setLanguageEventListeners() {
 	engButton.addEventListener("click", () => {
 		setLanguage("en");
 		clearAllFilters();
+		location.reload();
 	});
 	sweButton.addEventListener("click", () => {
 		setLanguage("sv");
 		clearAllFilters();
+		location.reload();
 	});
 }
 
