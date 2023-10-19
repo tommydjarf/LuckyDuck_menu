@@ -512,7 +512,7 @@ function basketDiv(total, addNew) {
 		}
 	}
 
-	document.getElementById("totalAmount").textContent = "Att betala: " + total + ":-";
+	document.getElementById("totalAmount").textContent = language === "en" ? "Total amount: " + total + ":-" : "Att betala: " + total + ":-";
 	document.getElementById("totalProducts").textContent = "( " + basketItem.length + " )";
 }
 

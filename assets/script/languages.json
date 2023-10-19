@@ -17,7 +17,8 @@
 			"shopNow": "Order",
 			"standard": "Standard",
 			"highToLow": "High to low",
-			"lowToHigh": "Low to high"
+			"lowToHigh": "Low to high",
+			"totalAmount": "Total amount: "
 		},
 		"sv": {
 			"h1Title": "Meny",
@@ -36,7 +37,8 @@
 			"shopNow": "Beställ",
 			"standard": "Standard",
 			"highToLow": "High to low",
-			"lowToHigh": "Low to high"
+			"lowToHigh": "Low to high",
+			"totalAmount": "Att betala: "
 		}
 	}
 }
