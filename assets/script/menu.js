@@ -108,15 +108,9 @@ function setLanguageEventListeners() {
 	const engButton = document.getElementById("eng");
 	const sweButton = document.getElementById("swe");
 
-	engButton.addEventListener("click", () => {
-		setLanguage("en");
-		clearAllFilters();
-		location.reload();
-	});
-	sweButton.addEventListener("click", () => {
-		setLanguage("sv");
-		clearAllFilters();
-		location.reload();
+	engButton.addEventListener("click", () => {setLanguage("en"); clearAllFilters(); location.reload();
+});
+	sweButton.addEventListener("click", () => {setLanguage("sv"); clearAllFilters(); location.reload();
 	});
 }
 
@@ -149,19 +143,20 @@ function start() {
 
 //---------------------------------------------Filter function - test
 
+
 // Definiera en tom array som heter "data" för att lagra menyobjekten.
 let data = [];
 // En asynkron funktion som hämtar menyobjekten när sidan laddas.
 async function loadData() {
-	try {
-		// Anropa "getMenu()" för att hämta menyn och sätta "data" till menyn för det aktuella språket (currentLanguage).
-		const { menu } = await getMenuAndLanguages();
-		data = menu.menu[language];
+    try {
+        // Anropa "getMenu()" för att hämta menyn och sätta "data" till menyn för det aktuella språket (currentLanguage).
+        const { menu } = await getMenuAndLanguages();
+        data = menu.menu[language];
 		console.log(data);
-	} catch (error) {
-		// Om det uppstår ett fel, logga det i konsolen.
-		console.error("Något gick fel: ", error);
-	}
+    } catch (error) {
+        // Om det uppstår ett fel, logga det i konsolen.
+        console.error("Något gick fel: ", error);
+    }
 }
 
 // Anropa "loadData()" när sidan laddas.
@@ -171,55 +166,56 @@ clearFilterButton.addEventListener("click", clearAllFilters);
 
 // Funktion för att återställa alla filter.
 function clearAllFilters() {
-	// tabort checkmarks i alla checkboxar och prisselecten.
-	const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-	checkboxes.forEach((checkbox) => {
-		checkbox.checked = false;
-	});
-	const selectElement = document.getElementById("sortera");
-	selectElement.selectedIndex = 0;
+    // tabort checkmarks i alla checkboxar och prisselecten.
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+    });
+    const selectElement = document.getElementById("sortera");
+    selectElement.selectedIndex = 0;
 
-	// Återställ till en tom array.
-	appliedFilters = [];
+    // Återställ till en tom array.
+    appliedFilters = [];
 
-	// Anropa filterfunktionen för att uppdatera visningen utan filter.
-	const selectedOption = selectElement.value;
-	const filteredData = filterAndSortMenu(selectedOption, appliedFilters);
-	displayMenuItems(filteredData);
+    // Anropa filterfunktionen för att uppdatera visningen utan filter.
+    const selectedOption = selectElement.value;
+    const filteredData = filterAndSortMenu(selectedOption, appliedFilters);
+    displayMenuItems(filteredData);
 }
 
 // Hitta HTML-elementen för sortering och filtrering.
 const sortera = document.getElementById("sortera");
 const meatFilterContainer = document.getElementById("filterTextBlockMeat");
-const allergiesFilterContainer = document.getElementById("filterTextBlockAllergies");
+const allergiesFilterContainer= document.getElementById("filterTextBlockAllergies");
 // Lägg till händelselyssnare för ändringar i både sortering och filtrering.
 sortera.addEventListener("change", handleSortAndFilter);
 meatFilterContainer.addEventListener("change", handleSortAndFilter);
-allergiesFilterContainer.addEventListener("change", handleSortAndFilter);
+allergiesFilterContainer.addEventListener("change", handleSortAndFilter)
 // Funktion för att hantera både filtrering och sortering.
 async function handleSortAndFilter(event) {
-	// Hämta det valda sorteringsalternativet och id på klickad checkbox.
-	const selectedOption = sortera.value;
-	const checkboxId = event.target.value;
-	console.log(checkboxId);
-	if (event.target.type === "checkbox") {
-		const isChecked = event.target.checked;
+    // Hämta det valda sorteringsalternativet och id på klickad checkbox.
+    const selectedOption = sortera.value;
+    const checkboxId = event.target.value;
+    console.log(checkboxId);
+    if (event.target.type === "checkbox") {
+        const isChecked = event.target.checked;
+        
+        if (isChecked) {
+            // Om en checkbox är markerad, lägg till filtret och logga dess id i konsolen.
+            addFilter(checkboxId);
+			
+        } else {
+            // Om checkboxen inte är markerad, ta bort filtret.
+            removeFilter(checkboxId);
+        }
+    }
 
-		if (isChecked) {
-			// Om en checkbox är markerad, lägg till filtret och logga dess id i konsolen.
-			addFilter(checkboxId);
-		} else {
-			// Om checkboxen inte är markerad, ta bort filtret.
-			removeFilter(checkboxId);
-		}
-	}
+    // Använd "appliedFilters" för filtrering och sortering. selectedOption för pris högtlågt
+    const filteredAndSortedData = filterAndSortMenu(selectedOption, appliedFilters);
 
-	// Använd "appliedFilters" för filtrering och sortering. selectedOption för pris högtlågt
-	const filteredAndSortedData = filterAndSortMenu(selectedOption, appliedFilters);
-
-	// Visa de filtrerade och sorterade rätterna och logga dem i konsolen.
-	displayMenuItems(filteredAndSortedData);
-	console.log(filteredAndSortedData + "här");
+    // Visa de filtrerade och sorterade rätterna och logga dem i konsolen.
+    displayMenuItems(filteredAndSortedData);
+    console.log(filteredAndSortedData+"här");
 }
 
 // En array som lagrar aktiva filter.
@@ -227,59 +223,62 @@ let appliedFilters = [];
 
 // Funktion för att lägga till ett filter i "appliedFilters".
 function addFilter(filter) {
-	if (!appliedFilters.includes(filter)) {
-		appliedFilters.push(filter);
-		console.log(filter);
-	}
+    if (!appliedFilters.includes(filter)) {
+        appliedFilters.push(filter);
+        console.log(filter);
+    }
 }
 
 // Funktion för att ta bort ett filter från "appliedFilters".
 function removeFilter(filter) {
-	const index = appliedFilters.indexOf(filter);
-	if (index !== -1) {
-		appliedFilters.splice(index, 1);
-	}
+    const index = appliedFilters.indexOf(filter);
+    if (index !== -1) {
+        appliedFilters.splice(index, 1);
+    }
 }
 
 function filterAndSortMenu(selectedOption, filters) {
+	
 	// Dela upp filtren i två kategorier: allergier och mat.
-	const allergyFilters = filters.filter((filter) => filter.startsWith("allergy_"));
-	const foodFilters = filters.filter((filter) => !filter.startsWith("allergy_"));
+    const allergyFilters = filters.filter((filter) => filter.startsWith('allergy_'));
+    const foodFilters = filters.filter((filter) => !filter.startsWith('allergy_'));
 
-	// Skapa en filterfunktion som tar hänsyn till både allergier och matfiltret.
-	const combinedFilter = (item) => {
-		// Kontrollera om rätten har alla allergifilter
-		const allergyMatch = allergyFilters.length === 2 || allergyFilters.every((allergyFilter) => item.categories.includes(allergyFilter));
+    // Skapa en filterfunktion som tar hänsyn till både allergier och matfiltret.
+    const combinedFilter = (item) => {
+        // Kontrollera om rätten har alla allergifilter
+        const allergyMatch = allergyFilters.length === 0 || allergyFilters.some((allergyFilter) => item.categories.includes(allergyFilter));
+        
+        // Kontrollera om rätten har något matfilter
+        const foodMatch = foodFilters.length === 0 || foodFilters.some((foodFilter) => item.categories.includes(foodFilter));
+        
+        // Visa rätten om både mat- och allergifilter matchar
+        return allergyMatch && foodMatch;
+    };
 
-		// Kontrollera om rätten har något matfilter
-		const foodMatch = foodFilters.length === 0 || foodFilters.some((foodFilter) => item.categories.includes(foodFilter));
+    // Använd filterfunktionen för att få de matchande rätterna.
+    const filteredData = data.filter(combinedFilter);
 
-		// Visa rätten om både mat- och allergifilter matchar
-		return allergyMatch && foodMatch;
-	};
+    // Utför sortering baserat på det valda alternativet.
+    if (selectedOption === "priceLowToHigh") {
+        // Sortera "filteredData" i stigande ordning baserat på priset (lägre pris först).
+        filteredData.sort((a, b) => {
+            const aPrice = typeof a.price === "object" ? a.price.full : a.price;
+            const bPrice = typeof b.price === "object" ? b.price.full : b.price;
+            return aPrice - bPrice;
+        });
+    } else if (selectedOption === "priceHighToLow") {
+        // Sortera "filteredData" i fallande ordning baserat på priset (högre pris först).
+        filteredData.sort((a, b) => {
+            const aPrice = typeof a.price === "object" ? a.price.full : a.price;
+            const bPrice = typeof b.price === "object" ? b.price.full : b.price;
+            return bPrice - aPrice;
+        });
+    }
 
-	// Använd filterfunktionen för att få de matchande rätterna.
-	const filteredData = data.filter(combinedFilter);
-
-	// Utför sortering baserat på det valda alternativet.
-	if (selectedOption === "priceLowToHigh") {
-		// Sortera "filteredData" i stigande ordning baserat på priset (lägre pris först).
-		filteredData.sort((a, b) => {
-			const aPrice = typeof a.price === "object" ? a.price.full : a.price;
-			const bPrice = typeof b.price === "object" ? b.price.full : b.price;
-			return aPrice - bPrice;
-		});
-	} else if (selectedOption === "priceHighToLow") {
-		// Sortera "filteredData" i fallande ordning baserat på priset (högre pris först).
-		filteredData.sort((a, b) => {
-			const aPrice = typeof a.price === "object" ? a.price.full : a.price;
-			const bPrice = typeof b.price === "object" ? b.price.full : b.price;
-			return bPrice - aPrice;
-		});
-	}
-
-	return filteredData; // Returnera den filtrerade och sorterade datan.
+    return filteredData; // Returnera den filtrerade och sorterade datan.
 }
+
+
 
 // Funktion för att filtrera och sortera menyobjekt.
 // function filterAndSortMenu(selectedOption, filters) {
@@ -289,11 +288,11 @@ function filterAndSortMenu(selectedOption, filters) {
 //     // Utför filtrering baserat på aktiva filter.
 //     // Använd Array.filter() för att skapa en ny lista (filteredData) som innehåller endast de objekt som passerar filtreringskriterierna.
 //     const filteredData = data.filter((item) => {
-
+		
 //         // Om inga filter är aktiva, visa alla rätter.
 //         if (filters.length === 0) {
 // 			return true; // Returnera true för att behålla rätten i filtreringsresultatet.
-
+        
 // 		}
 //         // Annars, kontrollera om rätten innehåller minst ett av de aktiva filtren.
 //         // Använd Array.some() för att kontrollera om något av de aktiva filtren finns i rättens kategorier.
@@ -325,40 +324,40 @@ const menuDisplay = document.getElementById("menuDisplay");
 
 // Funktion för att visa menyobjekten.
 function displayMenuItems(items) {
-	// Rensa befintliga menyobjekt.
-	menuDisplay.innerHTML = "";
+    // Rensa befintliga menyobjekt.
+    menuDisplay.innerHTML = "";
 
-	// Loopa igenom menyobjekten och skapa div-element för varje objekt.
-	items.forEach(function (item) {
-		const newDiv = document.createElement("div");
-		newDiv.classList.add("menu-item");
+    // Loopa igenom menyobjekten och skapa div-element för varje objekt.
+    items.forEach(function (item) {
+        const newDiv = document.createElement("div");
+        newDiv.classList.add("menu-item");
 
-		const dishHeader = document.createElement("h3");
-		dishHeader.textContent = item.dish;
+        const dishHeader = document.createElement("h3");
+        dishHeader.textContent = item.dish;
 
-		const priceParagraph = document.createElement("p");
-		priceParagraph.classList.add("price");
+        const priceParagraph = document.createElement("p");
+        priceParagraph.classList.add("price");
 
-		// Om priset är ett objekt, visa både halva och hela priserna.
-		if (typeof item.price === "object") {
-			priceParagraph.textContent = `Small: ${item.price.half}:- / Large: ${item.price.full}:-`;
-		} else {
-			priceParagraph.textContent = `${item.price}:-`;
-		}
+        // Om priset är ett objekt, visa både halva och hela priserna.
+        if (typeof item.price === "object") {
+            priceParagraph.textContent = `Small: ${item.price.half}:- / Large: ${item.price.full}:-`;
+        } else {
+            priceParagraph.textContent = `${item.price}:-`;
+        }
 
-		const descriptionParagraph = document.createElement("p");
-		descriptionParagraph.classList.add("description");
-		descriptionParagraph.textContent = item.description;
+        const descriptionParagraph = document.createElement("p");
+        descriptionParagraph.classList.add("description");
+        descriptionParagraph.textContent = item.description;
 
 		const addProductButton = createAddToCartButton(language);
-		addProductButton.value = item.id;
+			addProductButton.value = item.id;
 
-		newDiv.appendChild(dishHeader);
-		newDiv.appendChild(priceParagraph);
-		newDiv.appendChild(descriptionParagraph);
+        newDiv.appendChild(dishHeader);
+        newDiv.appendChild(priceParagraph);
+        newDiv.appendChild(descriptionParagraph);
 		newDiv.appendChild(addProductButton);
-		menuDisplay.appendChild(newDiv);
-	});
+        menuDisplay.appendChild(newDiv);
+    });
 }
 //-----------------------------------------Cart
 
@@ -387,7 +386,6 @@ async function buttonClickHandler(language, event) {
 		const items = menu.menu[language];
 
 		let buttonValue = event.target.value;
-		let smallOrFull = "small";
 		buttonValue--; //minus ett då id är ett men den första kolumnen i arryaen är noll
 		console.log(buttonValue);
 
@@ -395,19 +393,22 @@ async function buttonClickHandler(language, event) {
 			if (typeof item.id === "number" && typeof item.price === "number") {
 				return item.price;
 			} else if (typeof item.price === "object" && language == "en") {
+				
 				console.log(smallOrFull);
-				if (smallOrFull == "small") {
-					return item.price.half;
-				} else if (smallOrFull == "full") {
-					return item.price.full;
-				}
+					if (smallOrFull == "small") {
+						return item.price.half;
+					}else if (smallOrFull == "full") {
+						return item.price.full;
+					}
+				
 			} else if (typeof item.price === "object" && language == "sv") {
-				console.log(smallOrFull);
-				if (smallOrFull == "small") {
-					return item.price.half;
-				} else if (smallOrFull == "full") {
-					return item.price.full;
-				}
+					
+					console.log(smallOrFull);
+					if (smallOrFull == "small") {
+						return item.price.half;
+					}else if (smallOrFull == "full") {
+						return item.price.full;
+					}
 			}
 			return 0; // Returnera 0 om prisformatet inte matchar något av de ovanstående
 		});
@@ -427,30 +428,43 @@ async function buttonClickHandler(language, event) {
 }
 
 let smallOrFull = "small";
-// Hämta en Node-list av alla element med klassen "spanSmall" och "spanFull"
-const smallMenu = document.querySelectorAll(".spanSmall");
-const fullMenu = document.querySelectorAll(".spanFull");
 
-// Iterera igenom listan och lägg till eventlyssnare på varje element
-smallMenu.forEach((element) => {
-	element.addEventListener("click", () => {
-		// Klickhändelse för "spanSmall" element
-		document.querySelector(".spanSmall").style.textDecoration = "underline";
-		document.querySelector(".spanFull").style.textDecoration = "none";
-		smallOrFull = "small";
-		console.log("smallOrFull");
-	});
+const menuContainer = document.getElementById("menuDisplay");
+
+// Event delegation to handle clicks on "spanSmall" and "spanFull" elements
+menuContainer.addEventListener("click", (event) => {
+  // Check if the clicked element has the class "spanSmall" or "spanFull"
+  if (event.target.classList.contains("spanSmall") || event.target.classList.contains("spanFull")) {
+    // Get all elements with class "spanSmall" and "spanFull" inside menuContainer
+    const spanSmallElements = menuContainer.querySelectorAll(".spanSmall");
+    const spanFullElements = menuContainer.querySelectorAll(".spanFull");
+
+    if (event.target.classList.contains("spanSmall")) {
+      // Handle the click event for "spanSmall"
+      spanSmallElements.forEach((element) => {
+        element.style.textDecoration = "underline";
+      });
+      spanFullElements.forEach((element) => {
+        element.style.textDecoration = "none";
+      });
+      smallOrFull = "small";
+    } else if (event.target.classList.contains("spanFull")) {
+      // Handle the click event for "spanFull"
+      spanFullElements.forEach((element) => {
+        element.style.textDecoration = "underline";
+      });
+      spanSmallElements.forEach((element) => {
+        element.style.textDecoration = "none";
+      });
+      smallOrFull = "full";
+    }
+
+    console.log(smallOrFull);
+  }
 });
 
-fullMenu.forEach((element) => {
-	element.addEventListener("click", () => {
-		// Klickhändelse för "spanFull" element
-		document.querySelector(".spanFull").style.textDecoration = "underline";
-		document.querySelector(".spanSmall").style.textDecoration = "none";
-		smallOrFull = "full";
-		console.log("smallOrFull");
-	});
-});
+
+
 
 function addToBasketArray(buttonValue, pricesForItems, nameForItems) {
 	basketPrice.push(pricesForItems[buttonValue]);
@@ -529,6 +543,22 @@ showBasket.addEventListener("click", () => {
 		}
 	}
 });
+
+
+// Vänta tills dokumentet har laddats
+document.addEventListener("DOMContentLoaded", () => {
+	// Leta efter elementet med id "shopid"
+	const checkout = document.getElementById("shopNow");
+  
+	if (checkout) {
+	  // Om elementet hittades, lägg till en klickhändelse
+	  checkout.addEventListener("click", () => {
+		// Visa en varningspopup med anpassat meddelande
+		alert("Där tog tyvärr budgeten slut Malin!");
+	  });
+	}
+  });
+  
 
 start();
 
