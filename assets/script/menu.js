@@ -97,7 +97,7 @@ function getPriceText(price, language) {
 		if (language === "en") {
 			return `<span class="spanSmall">Small: ${price.half}:-</span> / <span class="spanFull">Large: ${price.full}:-</span>`;
 		} else {
-			return `Liten: ${price.half}:- / Stor: ${price.full}:-`;
+			return `<span class="spanSmall">Liten: ${price.half}:-</span> / <span class="spanFull">Stor: ${price.full}:-</span>`;
 		}
 	}
 	return "";
@@ -108,9 +108,9 @@ function setLanguageEventListeners() {
 	const engButton = document.getElementById("eng");
 	const sweButton = document.getElementById("swe");
 
-	engButton.addEventListener("click", () => {setLanguage("en"); clearAllFilters();
+	engButton.addEventListener("click", () => {setLanguage("en"); clearAllFilters(); location.reload();
 });
-	sweButton.addEventListener("click", () => {setLanguage("sv"); clearAllFilters();
+	sweButton.addEventListener("click", () => {setLanguage("sv"); clearAllFilters(); location.reload();
 	});
 }
 
@@ -246,7 +246,7 @@ function filterAndSortMenu(selectedOption, filters) {
     // Skapa en filterfunktion som tar hänsyn till både allergier och matfiltret.
     const combinedFilter = (item) => {
         // Kontrollera om rätten har alla allergifilter
-        const allergyMatch = allergyFilters.length === 2 || allergyFilters.every((allergyFilter) => item.categories.includes(allergyFilter));
+        const allergyMatch = allergyFilters.length === 0 || allergyFilters.some((allergyFilter) => item.categories.includes(allergyFilter));
         
         // Kontrollera om rätten har något matfilter
         const foodMatch = foodFilters.length === 0 || foodFilters.some((foodFilter) => item.categories.includes(foodFilter));
@@ -386,7 +386,6 @@ async function buttonClickHandler(language, event) {
 		const items = menu.menu[language];
 
 		let buttonValue = event.target.value;
-		let smallOrFull = "small";
 		buttonValue--; //minus ett då id är ett men den första kolumnen i arryaen är noll
 		console.log(buttonValue);
 
@@ -428,32 +427,40 @@ async function buttonClickHandler(language, event) {
 	}
 }
 
-
-
 let smallOrFull = "small";
-// Hämta en Node-list av alla element med klassen "spanSmall" och "spanFull"
-const smallMenu = document.querySelectorAll(".spanSmall");
-const fullMenu = document.querySelectorAll(".spanFull");
 
-// Iterera igenom listan och lägg till eventlyssnare på varje element
-smallMenu.forEach((element) => {
-  element.addEventListener("click", () => {
-    // Klickhändelse för "spanSmall" element
-    document.querySelector(".spanSmall").style.textDecoration = "underline";
-    document.querySelector(".spanFull").style.textDecoration = "none";
-    smallOrFull = "small";
-    console.log("smallOrFull");
-  });
-});
+const menuContainer = document.getElementById("menuDisplay");
 
-fullMenu.forEach((element) => {
-  element.addEventListener("click", () => {
-    // Klickhändelse för "spanFull" element
-    document.querySelector(".spanFull").style.textDecoration = "underline";
-    document.querySelector(".spanSmall").style.textDecoration = "none";
-    smallOrFull = "full";
-    console.log("smallOrFull");
-  });
+// Event delegation to handle clicks on "spanSmall" and "spanFull" elements
+menuContainer.addEventListener("click", (event) => {
+  // Check if the clicked element has the class "spanSmall" or "spanFull"
+  if (event.target.classList.contains("spanSmall") || event.target.classList.contains("spanFull")) {
+    // Get all elements with class "spanSmall" and "spanFull" inside menuContainer
+    const spanSmallElements = menuContainer.querySelectorAll(".spanSmall");
+    const spanFullElements = menuContainer.querySelectorAll(".spanFull");
+
+    if (event.target.classList.contains("spanSmall")) {
+      // Handle the click event for "spanSmall"
+      spanSmallElements.forEach((element) => {
+        element.style.textDecoration = "underline";
+      });
+      spanFullElements.forEach((element) => {
+        element.style.textDecoration = "none";
+      });
+      smallOrFull = "small";
+    } else if (event.target.classList.contains("spanFull")) {
+      // Handle the click event for "spanFull"
+      spanFullElements.forEach((element) => {
+        element.style.textDecoration = "underline";
+      });
+      spanSmallElements.forEach((element) => {
+        element.style.textDecoration = "none";
+      });
+      smallOrFull = "full";
+    }
+
+    console.log(smallOrFull);
+  }
 });
 
 
@@ -536,6 +543,22 @@ showBasket.addEventListener("click", () => {
 		}
 	}
 });
+
+
+// Vänta tills dokumentet har laddats
+document.addEventListener("DOMContentLoaded", () => {
+	// Leta efter elementet med id "shopid"
+	const checkout = document.getElementById("shopNow");
+  
+	if (checkout) {
+	  // Om elementet hittades, lägg till en klickhändelse
+	  checkout.addEventListener("click", () => {
+		// Visa en varningspopup med anpassat meddelande
+		alert("Där tog tyvärr budgeten slut Malin!");
+	  });
+	}
+  });
+  
 
 start();
 
