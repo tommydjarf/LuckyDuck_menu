@@ -42,14 +42,13 @@ function populateFilter(items) {
 }
 
 //Function to display menu i swe or eng
-async function displayMenu(language) {
-	console.log("language: ", language);
+async function displayMenu(items) {
 	const menuDisplay = document.getElementById("menuDisplay");
 	menuDisplay.innerHTML = "";
 
 	try {
-		const { menu } = await getMenuAndLanguages();
-		const items = menu.menu[language];
+		// const { menu } = await getMenuAndLanguages();
+		// const items = menu.menu[language];
 
 		items.forEach((item) => {
 			const menuItemDiv = document.createElement("div");
@@ -136,41 +135,13 @@ function start() {
 }
 
 //---------------------------------------------Filter function - test
-var vegetarian = document.getElementById("vegetarian-input").checked;
-var beef = document.getElementById("beef-input").checked;
-var pork = document.getElementById("pork-input").checked;
-var chicken = document.getElementById("chicken-input").checked;
-var fish = document.getElementById("fish-input").checked;
-var gluten = document.getElementById("gluten-input").checked;
-var lactose = document.getElementById("lactose-input").checked;
-var selectedCheckboxes = [];
-
-function setupCheckboxEventListener(checkboxId) {
-	var checkbox = document.getElementById(checkboxId);
-	checkbox.addEventListener("change", function () {
-		filterMenuItems();
-	});
-}
-
-async function filterMenuItems(filterdItems) {
-	try {
-		const { menu } = await getMenuAndLanguages();
-		const items = menu.menu[language];
-		const selectedCheckboxes = document.querySelectorAll(".category-checkbox:checked");
-
-		if (selectedCheckboxes.length === 0) {
-			return filterdItems;
-		}
-
-		const selectedCheckboxeIds = Array.from(selectedCheckboxes).map((checkbox) => checkbox.id.replace("-input", ""));
-
-		return filterdItems.filter((item) => {
-			return selectedCheckboxeIds.some((id) => item.tags.includes(id));
-		});
-	} catch (error) {
-		console.error("Tok med filterdMenuItems ", error);
-	}
-}
+// var vegetarian = document.getElementById("vegetarian-input").checked;
+// var beef = document.getElementById("beef-input").checked;
+// var pork = document.getElementById("pork-input").checked;
+// var chicken = document.getElementById("chicken-input").checked;
+// var fish = document.getElementById("fish-input").checked;
+// var gluten = document.getElementById("gluten-input").checked;
+// var lactose = document.getElementById("lactose-input").checked;
 
 setupCheckboxEventListener("vegetarian-input", vegetarian);
 setupCheckboxEventListener("beef-input", beef);
@@ -180,23 +151,41 @@ setupCheckboxEventListener("fish-input", fish);
 setupCheckboxEventListener("gluten-input", gluten);
 setupCheckboxEventListener("lactose-input", lactose);
 
-// function setupCheckboxEventListener(checkboxId, variable) {
-// 	var checkbox = document.getElementById(checkboxId);
-// 	var idWithoutInput = checkboxId.replace("-input", "");
-// 	checkbox.addEventListener("change", function () {
-// 		variable = checkbox.checked;
-// 		if (checkbox.checked) {
-// 			selectedCheckboxes.push(idWithoutInput);
-// 		} else {
-// 			const index = selectedCheckboxes.indexOf(idWithoutInput);
-// 			if (index > -1) {
-// 				selectedCheckboxes.splice(index, 1);
-// 			}
-// 		}
-// 		console.log(checkboxId + ": " + variable);
-// 		console.log(selectedCheckboxes);
-// 	});
-// }
+var selectedCheckboxes = [];
+
+function setupCheckboxEventListener(checkboxId) {
+	var checkbox = document.getElementById(checkboxId);
+	checkbox.addEventListener("change", function () {
+		filterMenuItems();
+	});
+}
+
+async function filterMenuItems() {
+	try {
+		const { menu } = await getMenuAndLanguages();
+		const items = menu.menu[language];
+		const selectedCheckboxes = document.querySelectorAll(".category-checkbox:checked");
+		let filteredItems = [];
+		filteredItems.length = 0;
+
+		if (selectedCheckboxes.length === 0) {
+			filteredItems = items;
+			return filteredItems;
+		}
+
+		const selectedCheckboxIds = Array.from(selectedCheckboxes).map((checkbox) => checkbox.id.replace("-input", ""));
+
+		filteredItems = items.filter((obj) => {
+			return selectedCheckboxIds.some((id) => obj.categories.includes(id));
+		});
+
+		displayMenu(filteredItems);
+
+		return filteredItems;
+	} catch (error) {
+		console.error("Tok med filterdMenuItems ", error);
+	}
+}
 
 //-----------------------------------------Cart
 
@@ -212,8 +201,7 @@ document.getElementById("menuDisplay").addEventListener("click", function (event
 
 async function buttonClickHandler(language, event) {
 	try {
-		const { menu } = await getMenuAndLanguages();
-		const items = menu.menu[language];
+		let items = await filterMenuItems();
 
 		let buttonValue = event.target.value;
 		buttonValue--; //minus ett då id är ett men den första kolumnen i arryaen är noll
