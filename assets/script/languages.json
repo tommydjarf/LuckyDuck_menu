@@ -12,7 +12,12 @@
 			"fish": " Fish",
 			"gluten": " Gluten free",
 			"lactose": " Lactose free",
-			"clearFilter": "Clear filter"
+			"clearFilter": "Clear filter",
+			"openingHours": "Open all days 10:00-20:00",
+			"shopNow": "Order",
+			"standard": "Standard",
+			"highToLow": "High to low",
+			"lowToHigh": "Low to high"
 		},
 		"sv": {
 			"h1Title": "Meny",
@@ -26,7 +31,12 @@
 			"fish": " Fisk",
 			"gluten": " Glutenfritt",
 			"lactose": " Laktosfritt",
-			"clearFilter": "Återställ filter"
+			"clearFilter": "Återställ filter",
+			"openingHours": "Öppet alla dagar 10:00-20:00",
+			"shopNow": "Beställ",
+			"standard": "Standard",
+			"highToLow": "High to low",
+			"lowToHigh": "Low to high"
 		}
 	}
 }
