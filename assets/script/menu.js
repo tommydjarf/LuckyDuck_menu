@@ -281,45 +281,6 @@ function filterAndSortMenu(selectedOption, filters) {
 	return filteredData; // Returnera den filtrerade och sorterade datan.
 }
 
-// Funktion för att filtrera och sortera menyobjekt.
-// function filterAndSortMenu(selectedOption, filters) {
-//     // Logga de aktiva filtren för felsökning.
-//     console.log(filters);
-
-//     // Utför filtrering baserat på aktiva filter.
-//     // Använd Array.filter() för att skapa en ny lista (filteredData) som innehåller endast de objekt som passerar filtreringskriterierna.
-//     const filteredData = data.filter((item) => {
-
-//         // Om inga filter är aktiva, visa alla rätter.
-//         if (filters.length === 0) {
-// 			return true; // Returnera true för att behålla rätten i filtreringsresultatet.
-
-// 		}
-//         // Annars, kontrollera om rätten innehåller minst ett av de aktiva filtren.
-//         // Använd Array.some() för att kontrollera om något av de aktiva filtren finns i rättens kategorier.
-//         return filters.some((filter) => item.categories.includes(filter));
-//     });
-
-//     // Utför sortering baserat på det valda alternativet.
-//     if (selectedOption === "priceLowToHigh") {
-//         // Sortera "filteredData" i stigande ordning baserat på priset (lägre pris först).
-//         filteredData.sort((a, b) => {
-//             const aPrice = typeof a.price === "object" ? a.price.full : a.price;
-//             const bPrice = typeof b.price === "object" ? b.price.full : b.price;
-//             return aPrice - bPrice;
-//         });
-//     } else if (selectedOption === "priceHighToLow") {
-//         // Sortera "filteredData" i fallande ordning baserat på priset (högre pris först).
-//         filteredData.sort((a, b) => {
-//             const aPrice = typeof a.price === "object" ? a.price.full : a.price;
-//             const bPrice = typeof b.price === "object" ? b.price.full : b.price;
-//             return bPrice - aPrice;
-//         });
-//     }
-
-//     return filteredData; // Returnera den filtrerade och sorterade datan.
-// }
-
 // Hitta HTML-elementet där menyobjekten ska visas.
 const menuDisplay = document.getElementById("menuDisplay");
 
@@ -364,14 +325,7 @@ function displayMenuItems(items) {
 
 let basketItem = [];
 let basketPrice = [];
-// const { menuGlobalVariable } = await getMenuAndLanguages();
-// // let currentLanguage = localStorage.getItem("selectedLanguage", language);
 
-// console.log(menuGlobalVariable);
-
-// getMenuAndLanguages().then((menu) => {
-// 	menuGlobalVariable = menu;
-// });
 
 document.getElementById("menuDisplay").addEventListener("click", function (event) {
 	if (event.target.classList.contains("addProductButtonClass")) {
@@ -573,17 +527,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 start();
 
-// document.querySelectorAll(".category-checkbox, #sortera").forEach(function (element) {
-// 	element.addEventListener("change", function () {
-// 		sortMenu(document.getElementById("sortera").value);
-// 	});
-// });
 
-// async function sortMenu(language, filteredResault) {
-
-// 	try {
-// 		const { menu } = await getMenuAndLanguages();
-// 		const items = menu.menu[language];
-
-// }
-// }
