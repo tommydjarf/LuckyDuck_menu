@@ -170,17 +170,31 @@ const clearFilterButton = document.getElementById("clearFilter");
 clearFilterButton.addEventListener("click", clearAllFilters);
 
 // Funktion för att återställa alla filter.
-function clearAllFilters() {
+function clearAllFilters(onlyVegetarian) {
 	// tabort checkmarks i alla checkboxar och prisselecten.
 	const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+	const vegetarianFilter = document.querySelector(".vegetarian");
+	
 	checkboxes.forEach((checkbox) => {
-		checkbox.checked = false;
+		if (onlyVegetarian == "vegetarian") {
+			checkbox.checked = false;
+			vegetarianFilter.checked = true;
+			
+		}
+		else if (onlyVegetarian === "allautomvegetarian"){
+			vegetarianFilter.checked = false;
+		}
+		else{
+			checkbox.checked = false;
+		}
+
 	});
 	const selectElement = document.getElementById("sortera");
 	selectElement.selectedIndex = 0;
 
 	// Återställ till en tom array.
 	appliedFilters = [];
+	console.log(appliedFilters);
 
 	// Anropa filterfunktionen för att uppdatera visningen utan filter.
 	const selectedOption = selectElement.value;
@@ -243,13 +257,38 @@ function removeFilter(filter) {
 
 function filterAndSortMenu(selectedOption, filters) {
 	// Dela upp filtren i två kategorier: allergier och mat.
-	const allergyFilters = filters.filter((filter) => filter.startsWith("allergy_"));
-	const foodFilters = filters.filter((filter) => !filter.startsWith("allergy_"));
+	let allergyFilters =[];
+	let foodFilters =[];
+	allergyFilters = filters.filter((filter) => filter.startsWith("allergy_"));
+	foodFilters = filters.filter((filter) => !filter.startsWith("allergy_"));
+
+	if (foodFilters.includes("vegetarian")) {
+		let onlyVegetarian = "vegetarian";
+		clearAllFilters(onlyVegetarian)
+		foodFilters.length = 0;
+		foodFilters = ["vegetarian"];
+	}
+
+	let meatDish = ["chicken", "beef", "fish", "pork"];
+	let numberOfIncludes = 0;
+	
+	for (let a = 0; a < meatDish.length; a++) {
+		if (foodFilters.includes(meatDish[a])) {
+			numberOfIncludes++;
+		}
+	}
+	
+	console.log("nnnbbbbva,jcjhcbjh" + numberOfIncludes);
+	const vegetarianFilter = document.querySelector(".vegetarian");
+
+	if (numberOfIncludes >0 && vegetarianFilter.checked == true) {
+		vegetarianFilter.checked = false;
+	}
 
 	// Skapa en filterfunktion som tar hänsyn till både allergier och matfiltret.
 	const combinedFilter = (item) => {
 		// Kontrollera om rätten har alla allergifilter
-		const allergyMatch = allergyFilters.length === 0 || allergyFilters.some((allergyFilter) => item.categories.includes(allergyFilter));
+		const allergyMatch = allergyFilters.length === 0 || allergyFilters.every((allergyFilter) => item.categories.includes(allergyFilter));
 
 		// Kontrollera om rätten har något matfilter
 		const foodMatch = foodFilters.length === 0 || foodFilters.some((foodFilter) => item.categories.includes(foodFilter));
@@ -516,10 +555,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		addFilterBlockMobile.addEventListener("click", () => {
 			
 			let filterButton = document.getElementById("container-choice");
-			if (filterButton.style.display === "none") {
-				filterButton.style.display = "flex";
+			if (filterButton.classList.contains("displayFlexMobile")){
+				filterButton.classList.remove("displayFlexMobile");
 			} else {
-				filterButton.style.display = "none";
+				filterButton.classList.add("displayFlexMobile");
 			}
 		});
 	}

@@ -6,28 +6,28 @@
 				"dish": "Pork Tenderloin Plank Steak",
 				"price": 149,
 				"description": "Duchesse potatoes, a redwine reduction, béarnaise and fried vegetables",
-				"categories": ["pork", "gluten"]
+				"categories": ["pork", "allergy_gluten"]
 			},
 			{
 				"id": 2,
 				"dish": "Beef Rydberg",
 				"price": 175,
 				"description": "Diced beef tenderloin, potatoes and onion, served with dijonmustard and raw egg yolk",
-				"categories": ["beef", "gluten"]
+				"categories": ["beef", "allergy_gluten"]
 			},
 			{
 				"id": 3,
 				"dish": "Spicy Cheeseburger",
 				"price": 155,
 				"description": "180gram prime rib burger with lettuce, tomato, pickled red onion, cheddar cheese with jalapeños and barbecue sauce in brioche bread with fries and smokey ranch-aioli",
-				"categories": ["beef", "milk"]
+				"categories": ["beef", "allergy_milk"]
 			},
 			{
 				"id": 4,
 				"dish": "Halloumi Burger",
 				"price": 155,
 				"description": "Lettuce, tomato, red onion and guacamole in brioche bread with fries and aioli",
-				"categories": ["vegetarian", "milk"]
+				"categories": ["vegetarian", "allergy_milk"]
 			},
 			{
 				"id": 5,
@@ -41,7 +41,7 @@
 				"dish": "Our own Schnitzel",
 				"price": 175,
 				"description": "200 grams of meat \"Borás biggest\" served with lemon, capers, anchovy, herb butter and a redwine reduction with fried potatoes",
-				"categories": ["pork", "milk"]
+				"categories": ["pork", "allergy_milk"]
 			},
 			{
 				"id": 7,
@@ -55,7 +55,7 @@
 				"dish": "Salmon Salad with Quinoa",
 				"price": 159,
 				"description": "Grilled salmon with quinoa, cocktail tomatoes, julianne carrot, mixed salad, red onion with vinegrette",
-				"categories": ["fish", "milk", "gluten"]
+				"categories": ["fish", "allergy_milk", "allergy_gluten"]
 			},
 			{
 				"id": 9,
@@ -69,14 +69,14 @@
 				"dish": "Mussels Ál Cava",
 				"price": { "half": 109, "full": 189 },
 				"description": "Steamed mussels in a creamy cava sauce, topped with cream fraiche and jalapenos, served with fries and aioli",
-				"categories": ["fish", "gluten"]
+				"categories": ["fish", "allergy_gluten"]
 			},
 			{
 				"id": 11,
 				"dish": "Grilled Beef Tenderloin",
 				"price": 259,
 				"description": "200 gram beef tenderloin, redwine reduction, fried vegetable and potato gratin (possible with fries and bearnaise)",
-				"categories": ["beef", "gluten"]
+				"categories": ["beef", "allergy_gluten"]
 			}
 		],
 		"sv": [
@@ -85,28 +85,28 @@
 				"dish": "Fläskfiléplanka",
 				"price": 149,
 				"description": "Duchesse mos, rödvinssky, bearnaise och stekta grönsaker",
-				"categories": ["pork", "gluten"]
+				"categories": ["pork", "allergy_gluten"]
 			},
 			{
 				"id": 2,
 				"dish": "Biff Rydberg",
 				"price": 175,
 				"description": "Tärnad oxfilé, potatis och gullök, serveras med dijonsenapskräm och rå äggula",
-				"categories": ["beef", "gluten"]
+				"categories": ["beef", "allergy_gluten"]
 			},
 			{
 				"id": 3,
 				"dish": "Spicy Cheeseburger",
 				"price": 155,
 				"description": "180gram högrevsburgare med sallad, tomat, picklade rödlök, cheddarost med jalapeños och barbecuesås i briochebröd med pommes och rökig ranch-aioli",
-				"categories": ["beef", "milk"]
+				"categories": ["beef", "allergy_milk"]
 			},
 			{
 				"id": 4,
 				"dish": "Halloumi Burgare",
 				"price": 155,
 				"description": "Sallad, tomat, rödlök och guacamole i brioche bröd med pommes och aioli",
-				"categories": ["vegetarian", "milk"]
+				"categories": ["vegetarian", "allergy_milk"]
 			},
 			{
 				"id": 5,
@@ -120,7 +120,7 @@
 				"dish": "Husets Schnitzel",
 				"price": 175,
 				"description": "200 gram välbankad schnitzel \"Boras största\" med citron, kapris, anjovis, kryddsmör och rödvinssky serveras med stekt potatis",
-				"categories": ["pork", "milk"]
+				"categories": ["pork", "allergy_milk"]
 			},
 			{
 				"id": 7,
@@ -134,7 +134,7 @@
 				"dish": "Lax sallad med quinoa",
 				"price": 159,
 				"description": "Grillad lax med quinoa, coctailtomater, blandsallad, morot julienne, rödlök med en vinägrett",
-				"categories": ["fish", "milk", "gluten"]
+				"categories": ["fish", "allergy_milk", "allergy_gluten"]
 			},
 			{
 				"id": 9,
@@ -148,14 +148,14 @@
 				"dish": "Mussels Ál Cava",
 				"price": { "half": 109, "full": 189 },
 				"description": "Ångkokta musslor i en krämig sås gjord på cava, toppas med cream fraiche och jalapenos, serveras med pommes och aioli",
-				"categories": ["fish", "gluten"]
+				"categories": ["fish", "allergy_gluten"]
 			},
 			{
 				"id": 11,
 				"dish": "Grilled Beef Tenderloin",
 				"price": 259,
 				"description": "200 gram oxfilé, rödvinssås, frästa ärtor med potatisgratäng (möjligt med pommes och bearnaise)",
-				"categories": ["beef", "gluten"]
+				"categories": ["beef", "allergy_gluten"]
 			}
 		]
 	}

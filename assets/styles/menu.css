@@ -138,7 +138,6 @@ header {
 	cursor: pointer;
 }
 
-
 .container-main {
 	display: flex;
 }
@@ -219,6 +218,10 @@ header {
 
 @media screen and (max-width: 600px) {
 
+	.displayFlexMobile{
+		display: flex;
+	}
+
 	#openingHours, #swe, #eng{
 		font-size: 1.2rem;
 	}
@@ -246,10 +249,14 @@ header {
 	.container-main {
 		display: block;
 	}
-	#container-choice{
+	.container-choice{
 		width: 100%;
+		padding: 1rem 5rem 1rem 5rem;
 		display: none;
-		padding: 1rem 3rem 1rem 3rem;
+	}
+	#checkboxForMobile, #filterTextBlockMeat{
+		width: 50%;
+		padding-left: 1rem;
 	}
 
 	.checkbox-choice {
@@ -263,12 +270,30 @@ header {
 		width: 100%;
 	}
 
+	.displayFlexMobile{
+		display: flex;
+	}
 }
 
 @media screen and (max-width: 400px) {
 
 	#h1-title {
 		font-size: 5rem;
+	}
+
+	.container-choice{
+		width: 100%;
+		display: none;
+		padding: 0.5rem 2.5rem 0.5rem 2.5rem;
+		font-size: 1.2rem;
+	}
+
+	#checkboxForMobile, #filterTextBlockMeat{
+		width: 50%;
+		padding-left: 1rem;
+	}
+	.displayFlexMobile{
+		display: flex;
 	}
 
 }
