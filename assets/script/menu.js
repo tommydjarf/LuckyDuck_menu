@@ -553,6 +553,24 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+	// Leta efter elementet med id "shopid"
+	const addFilterBlockMobile = document.getElementById("addFilterBlock");
+
+	if (addFilterBlockMobile) {
+		// Om elementet hittades, lägg till en klickhändelse
+		addFilterBlockMobile.addEventListener("click", () => {
+			
+			let filterButton = document.getElementById("container-choice");
+			if (filterButton.style.display === "none") {
+				filterButton.style.display = "flex";
+			} else {
+				filterButton.style.display = "none";
+			}
+		});
+	}
+});
+
 start();
 
 // document.querySelectorAll(".category-checkbox, #sortera").forEach(function (element) {

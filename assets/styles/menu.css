@@ -29,7 +29,6 @@
 html {
 	height: 100%;
 	font-size: 10px;
-	/* font-size: 62.5%; Kan användas istället för mer responsiv?*/
 }
 
 body {
@@ -65,20 +64,36 @@ body {
 .language-selection{
 	position: absolute;
 	right: 1rem;
-	top: 1rem;
+	top: 0rem;
 	margin: 0;
 }
 
 .language-selection a{
 	text-align: right;
-	font-size: 15px;
+	font-size: 1.5rem;
 	text-decoration: none;
+}
+
+#swe, #eng{
+	font-size: 1.5rem;
+	line-height: 4rem;
 }
 
 header {
 	display: inline-flex;
 	height: 15rem;
 	position: relative;
+}
+
+.header-logo {
+	height: 100%;
+}
+
+#h1-title {
+	font-size: 6rem;
+	align-self: flex-end;
+	margin-bottom: 1.6rem;
+	margin-left: 2.4rem;
 }
 
 #header-basket {
@@ -94,7 +109,7 @@ header {
 }
 
 #basketSymbol i{
-	font-size: 28px;
+	font-size: 2.6rem;
 	display: inline-block;
 	cursor: pointer;
 }
@@ -123,9 +138,6 @@ header {
 	cursor: pointer;
 }
 
-main {
-	max-height: calc(100vh - 25rem);
-}
 
 .container-main {
 	display: flex;
@@ -135,14 +147,27 @@ main {
 	width: 20rem;
 }
 
+#sortera{
+	border: none;
+	padding: 5px;
+	background: #562930;
+	color: white;
+	font-size: 12px;
+	border-radius: 2px;
+}
+
+#sortera option{
+	color: white;
+}
+
 .menu-display {
-	max-width: calc(128rem - 50rem);
+	/*max-width: calc(128rem - 50rem);*/
 	overflow: 1;
 	background: #F9F9F9;
 	padding: 2rem;
 }
 
-.addProductButtonClass, #clearFilter, #shopNow{
+.addProductButtonClass, #clearFilter, #shopNow, #addFilterBlock{
 	border: none;
 	padding: 5px;
 	background: #562930;
@@ -152,28 +177,25 @@ main {
 
 }
 
-.addProductButtonClass:hover, #clearFilter:hover{
+.addProductButtonClass:hover, #clearFilter:hover, #addFilterBlock:hover{
 	background: #F4C7BE;
 
 }
 
-.food-pictures {
-	width: 30rem;
+#addFilterBlock{
+	width: 80%;
+	margin-left: 10%;
+	margin-top: 3rem;
+	display: none;
 }
 
 .footer {
 	height: 10rem;
+	width: 100%;
 }
 
-.header-logo {
-	height: 100%;
-}
-
-#h1-title {
-	font-size: 6rem;
-	align-self: flex-end;
-	margin-bottom: var(--margin-sm);
-	margin-left: var(--margin-md);
+.copyright{
+	text-align: center;
 }
 
 .cart {
@@ -192,5 +214,61 @@ main {
 
 .spanFull {
     cursor: pointer;
+
+}
+
+@media screen and (max-width: 600px) {
+
+	#openingHours, #swe, #eng{
+		font-size: 1.2rem;
+	}
+
+	header {
+		height: 8rem;
+	}
+
+	#header-basket {
+		top: 1rem;
+		right: 0.5rem;
+		font-size: 2rem;
+	}
+
+	#basketSymbol i{
+		font-size: 2rem;
+	}
+
+	#h1-title {
+		margin-bottom: 0;
+		margin-top: 1rem;
+		margin-left: 1rem;
+	}
+
+	.container-main {
+		display: block;
+	}
+	#container-choice{
+		width: 100%;
+		display: none;
+		padding: 1rem 3rem 1rem 3rem;
+	}
+
+	.checkbox-choice {
+		width: 100%;
+	}
+	
+	#addFilterBlock{
+		display: block;
+	}
+	#menuDisplay{
+		width: 100%;
+	}
+
+}
+
+@media screen and (max-width: 400px) {
+
+	#h1-title {
+		font-size: 5rem;
+	}
 
 }

@@ -41,6 +41,12 @@
 
 			<main>
 				<div class="container-main">
+
+					<div id="filterMobile">
+						<button id="addFilterBlock">Filter</button>
+						
+					</div>
+
 					<!-- Checkbox for chosing food alternative -->
 					<div class="container-choice" id="container-choice">
 						<div class="checkbox-choice" id="filterTextBlockMeat">
@@ -61,26 +67,28 @@
 							<label id="fish" for="fish-input" name="fish" value="fish"> Fisk </label>
 						</div>
 						<!-- Checkbox for chosing allergies -->
-						<div class="checkbox-choice" id="filterTextBlockAllergies">
-							<h2 id="allergies">Allegier</h2>
-							<input type="checkbox" class="category-checkbox" id="gluten-input" data-filter="gluten" value="gluten" />
-							<label id="gluten" for="gluten-input" name="gluten" value="gluten"> Glutenfritt </label>
-							<br />
-							<input type="checkbox" class="category-checkbox" id="lactose-input" data-filter="lactose" value="milk" />
-							<label id="lactose" for="lactose-input" name="lactose" value="milk"> Laktosfritt </label>
-						</div>
-						<!-- Button to clear filter -->
-						<div class="clearFilter">
-							<button type="reset" id="clearFilter">Återställ filter</button>
-						</div>
+						<div id="checkboxForMobile">
+							<div class="checkbox-choice" id="filterTextBlockAllergies">
+								<h2 id="allergies">Allegier</h2>
+								<input type="checkbox" class="category-checkbox" id="gluten-input" data-filter="gluten" value="gluten" />
+								<label id="gluten" for="gluten-input" name="gluten" value="gluten"> Glutenfritt </label>
+								<br />
+								<input type="checkbox" class="category-checkbox" id="lactose-input" data-filter="lactose" value="milk" />
+								<label id="lactose" for="lactose-input" name="lactose" value="milk"> Laktosfritt </label>
+							</div>
+							<!-- Button to clear filter -->
+							<div class="clearFilter">
+								<button type="reset" id="clearFilter">Återställ filter</button>
+							</div>
 
-						<div>
-							<p id="sort">Sortera</p>
-							<select id="sortera" value="Sort price" name="Sort price" aria-label="Sortera efter pris">
-								<option id="standard" for="sortera" value="standard" name="standard">Standard</option>
-								<option id="highToLow" for="sortera" value="priceHighToLow" name="highToLow">Pris högt till lågt</option>
-								<option id="lowToHigh" for="sortera" value="priceLowToHigh" name="lowToHigh">Pris lögt till högt</option>
-							</select>
+							<div>
+								<p id="sort">Sortera</p>
+								<select id="sortera" value="Sort price" name="Sort price" aria-label="Sortera efter pris">
+									<option id="standard" for="sortera" value="standard" name="standard">Standard</option>
+									<option id="highToLow" for="sortera" value="priceHighToLow" name="highToLow">Pris högt till lågt</option>
+									<option id="lowToHigh" for="sortera" value="priceLowToHigh" name="lowToHigh">Pris lögt till högt</option>
+								</select>
+							</div>
 						</div>
 					</div>
 					<div class="menu-display" id="menuDisplay"></div>
